@@ -1,5 +1,5 @@
 # VR-Relaxation
 
-## ���e
+## 内容
 
-* VR��ԓ��őQ�i�I�ؒo�ɖ@�Ƃ��������b�N�X�@�����H����B
+* VR空間内で漸進的筋弛緩法というリラックス法を実践する。
