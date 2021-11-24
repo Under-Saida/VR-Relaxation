@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 8979885870847773968, guid: 1eb802dcf4b94614087bf58b2ec247e7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8979885870847773968, guid: 1eb802dcf4b94614087bf58b2ec247e7,
         type: 3}
@@ -447,6 +447,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4740143680407087212, guid: 86b1e8192cb57cd47890882526664df1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740143680407087212, guid: 86b1e8192cb57cd47890882526664df1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4740143680597435056, guid: 86b1e8192cb57cd47890882526664df1,
         type: 3}
       propertyPath: Model
@@ -455,6 +465,11 @@ PrefabInstance:
     - target: {fileID: 4740143680597435056, guid: 86b1e8192cb57cd47890882526664df1,
         type: 3}
       propertyPath: Freeze
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740143680597435056, guid: 86b1e8192cb57cd47890882526664df1,
+        type: 3}
+      propertyPath: HeadPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4740143680597435057, guid: 86b1e8192cb57cd47890882526664df1,
