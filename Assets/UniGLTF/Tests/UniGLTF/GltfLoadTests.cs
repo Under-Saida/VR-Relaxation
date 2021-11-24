@@ -57,13 +57,13 @@ namespace UniGLTF
 
         static Byte[] Export(GameObject root)
         {
-            var data = new ExportingGltfData();
-            using (var exporter = new gltfExporter(data, new GltfExportSettings()))
+            var gltf = new glTF();
+            using (var exporter = new gltfExporter(gltf, new GltfExportSettings()))
             {
                 exporter.Prepare(root);
-                exporter.Export(new EditorTextureSerializer());
+                exporter.Export(new GltfExportSettings(), new EditorTextureSerializer());
+                return gltf.ToGlbBytes();
             }
-            return data.ToGlbBytes();
         }
 
         // Unsolved Animation Export issue
@@ -81,7 +81,7 @@ namespace UniGLTF
             GltfData data = null;
             try
             {
-                data = new AutoGltfFileParser(gltf.FullName).Parse();
+                data = new AmbiguousGltfFileParser(gltf.FullName).Parse();
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace UniGLTF
             GltfData data = null;
             try
             {
-                data = new AutoGltfFileParser(gltf.FullName).Parse();
+                data = new AmbiguousGltfFileParser(gltf.FullName).Parse();
             }
             catch (Exception ex)
             {
@@ -205,7 +205,7 @@ namespace UniGLTF
 
             {
                 var path = Path.Combine(root.FullName, "DamagedHelmet/glTF-Binary/DamagedHelmet.glb");
-                var data = new AutoGltfFileParser(path).Parse();
+                var data = new AmbiguousGltfFileParser(path).Parse();
 
                 var matDesc = new GltfMaterialDescriptorGenerator().Get(data, 0);
                 Assert.AreEqual("Standard", matDesc.ShaderName);

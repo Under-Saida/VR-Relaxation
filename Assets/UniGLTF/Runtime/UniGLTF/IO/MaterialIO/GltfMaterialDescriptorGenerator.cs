@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VRMShaders;
@@ -13,22 +12,19 @@ namespace UniGLTF
     {
         public MaterialDescriptor Get(GltfData data, int i)
         {
-            if (GltfUnlitMaterialImporter.TryCreateParam(data, i, out var param)) return param;
-            if (GltfPbrMaterialImporter.TryCreateParam(data, i, out param)) return param;
-            // fallback
+            if (!GltfUnlitMaterialImporter.TryCreateParam(data, i, out var param))
+            {
+                if (!GltfPbrMaterialImporter.TryCreateParam(data, i, out param))
+                {
+                    // fallback
 #if VRM_DEVELOP
-            Debug.LogWarning($"material: {i} out of range. fallback");
+                    Debug.LogWarning($"material: {i} out of range. fallback");
 #endif
-            return new MaterialDescriptor(
-                GetMaterialName(i, null),
-                GltfPbrMaterialImporter.ShaderName, 
-                null,
-                new Dictionary<string, TextureDescriptor>(),
-                new Dictionary<string, float>(),
-                new Dictionary<string, Color>(),
-                new Dictionary<string, Vector4>(),
-                new Action<Material>[]{});
+                    return new MaterialDescriptor(GetMaterialName(i, null), GltfPbrMaterialImporter.ShaderName);
+                }
+            }
 
+            return param;
         }
 
         public static string GetMaterialName(int index, glTFMaterial src)

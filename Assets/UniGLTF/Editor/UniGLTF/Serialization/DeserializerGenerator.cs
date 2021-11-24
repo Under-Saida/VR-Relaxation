@@ -39,7 +39,8 @@ public static class GltfDeserializer
             }
         }
 
-        public static void GenerateSerializer()
+        [MenuItem(UniGLTFVersion.MENU + "/GLTF: Generate Deserializer")]
+        static void GenerateSerializer()
         {
             var info = new ObjectSerialization(typeof(glTF), "gltf", "Deserialize_");
             Debug.Log(info);

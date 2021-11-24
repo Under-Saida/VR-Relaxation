@@ -122,19 +122,21 @@ namespace UniGLTF
             root.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
             // Export glTF
-            var data = new ExportingGltfData();
-            using (var exporter = new gltfExporter(data, new GltfExportSettings
+            var gltf = new glTF();
+            using (var exporter = new gltfExporter(gltf, new GltfExportSettings
             {
-                InverseAxis = Axes.X,
-                ExportOnlyBlendShapePosition = false,
-                UseSparseAccessorForMorphTarget = false,
-                DivideVertexBuffer = false,
+                InverseAxis = Axes.X
             }))
             {
                 exporter.Prepare(root);
-                exporter.Export(new EditorTextureSerializer());
+                var settings = new GltfExportSettings
+                {
+                    ExportOnlyBlendShapePosition = false,
+                    UseSparseAccessorForMorphTarget = false,
+                    DivideVertexBuffer = false,
+                };
+                exporter.Export(settings, new EditorTextureSerializer());
             }
-            var gltf = data.GLTF;
             Assert.AreEqual(1, gltf.images.Count);
             var exportedImage = gltf.images[0];
             Assert.AreEqual("image/png", exportedImage.mimeType);
@@ -143,10 +145,8 @@ namespace UniGLTF
             UnityEngine.Object.DestroyImmediate(mat);
             UnityEngine.Object.DestroyImmediate(root);
 
-            var parsed = GltfData.CreateFromGltfDataForTest(gltf, data.BinBytes);
-
             // Extract Image to Texture2D
-            var exportedBytes = parsed.GetBytesFromBufferView(exportedImage.bufferView).ToArray();
+            var exportedBytes = gltf.GetViewBytes(exportedImage.bufferView).ToArray();
             var exportedTexture = new Texture2D(2, 2, TextureFormat.ARGB32, mipChain: false, linear: false);
             Assert.IsTrue(exportedTexture.LoadImage(exportedBytes)); // Always true ?
             Assert.AreEqual(srcTex.width, exportedTexture.width);

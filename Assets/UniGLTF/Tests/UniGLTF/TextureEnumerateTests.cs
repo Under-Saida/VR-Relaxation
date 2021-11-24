@@ -235,7 +235,7 @@ namespace UniGLTF
                 string.Empty,
                 gltf,
                 new List<GlbChunk>(),
-                default,
+                new SimpleStorage(new ArraySegment<byte>()),
                 new MigrationFlags()
             );
         }

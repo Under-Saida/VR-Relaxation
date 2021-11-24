@@ -13,7 +13,7 @@ namespace VRM
         public static void Build()
         {
             var scenes = new string[]{
-                "./Assets/VRM_Samples/SimpleViewer/SimpleViewer.unity",
+                "./Assets/VRM.Samples/Scenes/SimpleViewer.unity",
             };
 
             var report = BuildPipeline.BuildPlayer(

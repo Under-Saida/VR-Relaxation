@@ -292,9 +292,6 @@ namespace UniGLTF.Zip
         }
     }
 
-    /// <summary>
-    /// Implement url that reference zip archive
-    /// </summary>
     class ZipArchiveStorage : IStorage
     {
         public override string ToString()
@@ -380,6 +377,11 @@ namespace UniGLTF.Zip
             }
 
             throw new NotImplementedException(found.CompressionMethod.ToString());
+        }
+
+        public string GetPath(string url)
+        {
+            return null;
         }
     }
 }

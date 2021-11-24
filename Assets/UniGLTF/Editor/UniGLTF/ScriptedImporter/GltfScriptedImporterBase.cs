@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using System.Linq;
 using VRMShaders;
 #if UNITY_2020_2_OR_NEWER
@@ -18,44 +19,13 @@ namespace UniGLTF
         [SerializeField]
         public ScriptedImporterAxes m_reverseAxis = default;
 
-        [SerializeField]
-        [Header("Experimental")]
-        public RenderPipelineTypes m_renderPipeline;
-
-        void OnValidate()
-        {
-            if (m_renderPipeline == UniGLTF.RenderPipelineTypes.UniversalRenderPipeline)
-            {
-                if (Shader.Find(UniGLTF.GltfPbrUrpMaterialImporter.ShaderName) == null)
-                {
-                    Debug.LogWarning("URP is not installed. Force to BuiltinRenderPipeline");
-                    m_renderPipeline = UniGLTF.RenderPipelineTypes.BuiltinRenderPipeline;
-                }
-            }
-        }
-
-        static IMaterialDescriptorGenerator GetMaterialGenerator(RenderPipelineTypes renderPipeline)
-        {
-            switch (renderPipeline)
-            {
-                case RenderPipelineTypes.BuiltinRenderPipeline:
-                    return new GltfMaterialDescriptorGenerator();
-
-                case RenderPipelineTypes.UniversalRenderPipeline:
-                    return new GltfUrpMaterialDescriptorGenerator();
-
-                default:
-                    throw new System.NotImplementedException();
-            }
-        }
-
         /// <summary>
         /// glb をパースして、UnityObject化、さらにAsset化する
         /// </summary>
         /// <param name="scriptedImporter"></param>
         /// <param name="context"></param>
         /// <param name="reverseAxis"></param>
-        protected static void Import(ScriptedImporter scriptedImporter, AssetImportContext context, Axes reverseAxis, RenderPipelineTypes renderPipeline)
+        protected static void Import(ScriptedImporter scriptedImporter, AssetImportContext context, Axes reverseAxis)
         {
 #if VRM_DEVELOP
             Debug.Log("OnImportAsset to " + scriptedImporter.assetPath);
@@ -64,7 +34,7 @@ namespace UniGLTF
             //
             // Parse(parse glb, parser gltf json)
             //
-            var data = new AutoGltfFileParser(scriptedImporter.assetPath).Parse();
+            var data = new AmbiguousGltfFileParser(scriptedImporter.assetPath).Parse();
 
 
             //
@@ -76,9 +46,7 @@ namespace UniGLTF
                 .Where(x => x.Value != null)
                 .ToDictionary(kv => new SubAssetKey(kv.Value.GetType(), kv.Key.name), kv => kv.Value);
 
-            IMaterialDescriptorGenerator materialGenerator = GetMaterialGenerator(renderPipeline);
-
-            using (var loader = new ImporterContext(data, extractedObjects, materialGenerator: materialGenerator))
+            using (var loader = new ImporterContext(data, extractedObjects))
             {
                 // Configure TextureImporter to Extracted Textures.
                 foreach (var textureInfo in loader.TextureDescriptorGenerator.Get().GetEnumerable())

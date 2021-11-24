@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-using UnityEngine.Profiling;
 using VRMShaders;
 
 namespace UniGLTF
@@ -20,23 +19,14 @@ namespace UniGLTF
         public AnimationClipFactory AnimationClipFactory { get; }
         public IReadOnlyDictionary<SubAssetKey, UnityEngine.Object> ExternalObjectMap;
 
-        /// <summary>
-        /// UnityObject の 生成(LoadAsync) と 破棄(Dispose) を行う。
-        /// LoadAsync が成功した場合、返り値(RuntimeGltfInstance) に破棄する責務を移動させる。
-        /// </summary>
-        /// <param name="data">Jsonからデシリアライズされた GLTF 情報など</param>
-        /// <param name="externalObjectMap">外部オブジェクトのリスト(主にScriptedImporterのRemapで使う)</param>
-        /// <param name="textureDeserializer">Textureロードをカスタマイズする</param>
-        /// <param name="materialGenerator">Materialロードをカスタマイズする(URP向け)</param>
         public ImporterContext(
             GltfData data,
             IReadOnlyDictionary<SubAssetKey, UnityEngine.Object> externalObjectMap = null,
-            ITextureDeserializer textureDeserializer = null,
-            IMaterialDescriptorGenerator materialGenerator = null)
+            ITextureDeserializer textureDeserializer = null)
         {
             Data = data;
             TextureDescriptorGenerator = new GltfTextureDescriptorGenerator(Data);
-            MaterialDescriptorGenerator = materialGenerator ?? new GltfMaterialDescriptorGenerator();
+            MaterialDescriptorGenerator = new GltfMaterialDescriptorGenerator();
 
             ExternalObjectMap = externalObjectMap ?? new Dictionary<SubAssetKey, UnityEngine.Object>();
             textureDeserializer = textureDeserializer ?? new UnityTextureDeserializer();
@@ -57,6 +47,7 @@ namespace UniGLTF
         public GltfData Data { get; }
         public String Json => Data.Json;
         public glTF GLTF => Data.GLTF;
+        public IStorage Storage => Data.Storage;
         #endregion
 
         // configuration
@@ -79,7 +70,7 @@ namespace UniGLTF
         {
             if (awaitCaller == null)
             {
-                awaitCaller = new ImmediateCaller();
+                awaitCaller = new TaskCaller();
             }
 
             if (MeasureTime == null)
@@ -105,12 +96,12 @@ namespace UniGLTF
 
             using (MeasureTime("LoadTextures"))
             {
-                await LoadTexturesAsync(awaitCaller);
+                await LoadTexturesAsync();
             }
 
             using (MeasureTime("LoadMaterials"))
             {
-                await LoadMaterialsAsync(awaitCaller);
+                await LoadMaterialsAsync();
             }
 
             await LoadGeometryAsync(awaitCaller, MeasureTime);
@@ -132,10 +123,9 @@ namespace UniGLTF
             {
                 foreach (var (key, gltfAnimation) in Enumerable.Zip(AnimationImporterUtil.EnumerateSubAssetKeys(GLTF), GLTF.animations, (x, y) => (x, y)))
                 {
-                    await AnimationClipFactory.LoadAnimationClipAsync(key, () =>
+                    await AnimationClipFactory.LoadAnimationClipAsync(key, async () =>
                     {
-                        var clip = AnimationImporterUtil.ConvertAnimationClip(Data, gltfAnimation, InvertAxis.Create());
-                        return Task.FromResult(clip);
+                        return AnimationImporterUtil.ConvertAnimationClip(GLTF, gltfAnimation, InvertAxis.Create());
                     });
                 }
 
@@ -170,65 +160,40 @@ namespace UniGLTF
             var inverter = InvertAxis.Create();
 
             var meshImporter = new MeshImporter();
-            if (GLTF.meshes.Count > 0)
+            for (int i = 0; i < GLTF.meshes.Count; ++i)
             {
-                for (var i = 0; i < GLTF.meshes.Count; ++i)
+                var index = i;
+                using (MeasureTime("ReadMesh"))
                 {
-                    var index = i;
-                    using (MeasureTime("ReadMesh"))
-                    {
-                        var x = await awaitCaller.Run(() => meshImporter.ReadMesh(Data, index, inverter));
-                        var y = await BuildMeshAsync(awaitCaller, MeasureTime, x, index);
-                        Meshes.Add(y);
-                    }
+                    var x = meshImporter.ReadMesh(GLTF, index, inverter);
+                    var y = await BuildMeshAsync(awaitCaller, MeasureTime, x, index);
+                    Meshes.Add(y);
                 }
-
-                await awaitCaller.NextFrame();
             }
 
-            if (GLTF.nodes.Count > 0)
+            using (MeasureTime("LoadNodes"))
             {
-                using (MeasureTime("LoadNodes"))
+                for (int i = 0; i < GLTF.nodes.Count; i++)
                 {
-                    Profiler.BeginSample("ImporterContext.LoadNodes");
-                    for (var i = 0; i < GLTF.nodes.Count; i++)
-                    {
-                        Nodes.Add(NodeImporter.ImportNode(GLTF.nodes[i], i).transform);
-                    }
-                    Profiler.EndSample();
+                    Nodes.Add(NodeImporter.ImportNode(GLTF.nodes[i], i).transform);
                 }
-
-                await awaitCaller.NextFrame();
             }
+            await awaitCaller.NextFrame();
 
             using (MeasureTime("BuildHierarchy"))
             {
                 var nodes = new List<NodeImporter.TransformWithSkin>();
-                if (Nodes.Count > 0)
+                for (int i = 0; i < Nodes.Count; ++i)
                 {
-                    Profiler.BeginSample("NodeImporter.BuildHierarchy");
-                    for (var i = 0; i < Nodes.Count; ++i)
-                    {
-                        nodes.Add(NodeImporter.BuildHierarchy(GLTF, i, Nodes, Meshes));
-                    }
-                    Profiler.EndSample();
-
-                    await awaitCaller.NextFrame();
+                    nodes.Add(NodeImporter.BuildHierarchy(GLTF, i, Nodes, Meshes));
                 }
 
                 NodeImporter.FixCoordinate(GLTF, nodes, inverter);
 
                 // skinning
-                if (nodes.Count > 0)
+                for (int i = 0; i < nodes.Count; ++i)
                 {
-                    Profiler.BeginSample("NodeImporter.SetupSkinning");
-                    for (var i = 0; i < nodes.Count; ++i)
-                    {
-                        NodeImporter.SetupSkinning(Data, nodes, i, inverter);
-                    }
-                    Profiler.EndSample();
-
-                    await awaitCaller.NextFrame();
+                    NodeImporter.SetupSkinning(GLTF, nodes, i, inverter);
                 }
 
                 if (Root == null)

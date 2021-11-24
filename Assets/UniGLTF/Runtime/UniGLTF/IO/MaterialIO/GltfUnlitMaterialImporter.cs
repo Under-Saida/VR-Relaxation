@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UniGLTF.UniUnlit;
-using UnityEngine;
+﻿using UnityEngine;
 using VRMShaders;
 using ColorSpace = VRMShaders.ColorSpace;
 
@@ -9,7 +6,7 @@ namespace UniGLTF
 {
     public static class GltfUnlitMaterialImporter
     {
-        private static readonly int Cutoff = Shader.PropertyToID("_Cutoff");
+        public const string ShaderName = "UniGLTF/UniUnlit";
 
         public static bool TryCreateParam(GltfData data, int i, out MaterialDescriptor matDesc)
         {
@@ -26,81 +23,65 @@ namespace UniGLTF
                 return false;
             }
 
-            var textureSlots = new Dictionary<string, TextureDescriptor>();
-            var colors =
-                src.pbrMetallicRoughness.baseColorFactor != null &&
-                src.pbrMetallicRoughness.baseColorFactor.Length == 4
-                    ? new Dictionary<string, Color>
-                    {
-                        {
-                            "_Color",
-                            src.pbrMetallicRoughness.baseColorFactor.ToColor4(ColorSpace.Linear, ColorSpace.sRGB)
-                        }
-                    }
-                    : new Dictionary<string, Color>();
+            matDesc = new MaterialDescriptor(GltfMaterialDescriptorGenerator.GetMaterialName(i, src), ShaderName);
 
             // texture
             if (src.pbrMetallicRoughness.baseColorTexture != null)
             {
-                var (offset, scale) =
-                    GltfTextureImporter.GetTextureOffsetAndScale(src.pbrMetallicRoughness.baseColorTexture);
-                var (key, textureParam) = GltfTextureImporter.CreateSRGB(data,
-                    src.pbrMetallicRoughness.baseColorTexture.index, offset, scale);
-                textureSlots.Add("_MainTex", textureParam);
+                var (offset, scale) = GltfTextureImporter.GetTextureOffsetAndScale(src.pbrMetallicRoughness.baseColorTexture);
+                var (key, textureParam) = GltfTextureImporter.CreateSRGB(data, src.pbrMetallicRoughness.baseColorTexture.index, offset, scale);
+                matDesc.TextureSlots.Add("_MainTex", textureParam);
             }
 
-            matDesc = new MaterialDescriptor(
-                GltfMaterialDescriptorGenerator.GetMaterialName(i, src),
-                UniUnlitUtil.ShaderName,
-                null,
-                textureSlots,
-                new Dictionary<string, float>(),
-                colors,
-                new Dictionary<string, Vector4>(),
-                new Action<Material>[]
+            // color
+            if (src.pbrMetallicRoughness.baseColorFactor != null && src.pbrMetallicRoughness.baseColorFactor.Length == 4)
+            {
+                matDesc.Colors.Add("_Color",
+                    src.pbrMetallicRoughness.baseColorFactor.ToColor4(ColorSpace.Linear, ColorSpace.sRGB)
+                );
+            }
+
+            //renderMode
+            matDesc.Actions.Add(material =>
+            {
+                if (src.alphaMode == "OPAQUE")
                 {
-                    //renderMode
-                    material =>
-                    {
-                        switch (src.alphaMode)
-                        {
-                            case "OPAQUE":
-                                UniUnlitUtil.SetRenderMode(material, UniUnlitRenderMode.Opaque);
-                                break;
-                            case "BLEND":
-                                UniUnlitUtil.SetRenderMode(material, UniUnlitRenderMode.Transparent);
-                                break;
-                            case "MASK":
-                                UniUnlitUtil.SetRenderMode(material, UniUnlitRenderMode.Cutout);
-                                material.SetFloat(Cutoff, src.alphaCutoff);
-                                break;
-                            default:
-                                // default OPAQUE
-                                UniUnlitUtil.SetRenderMode(material, UniUnlitRenderMode.Opaque);
-                                break;
-                        }
-
-                        // culling
-                        if (src.doubleSided)
-                        {
-                            UniUnlitUtil.SetCullMode(material, UniUnlitCullMode.Off);
-                        }
-                        else
-                        {
-                            UniUnlitUtil.SetCullMode(material, UniUnlitCullMode.Back);
-                        }
-
-                        // VColor
-                        var hasVertexColor = data.GLTF.MaterialHasVertexColor(i);
-                        if (hasVertexColor)
-                        {
-                            UniUnlitUtil.SetVColBlendMode(material, UniUnlitVertexColorBlendOp.Multiply);
-                        }
-
-                        UniUnlitUtil.ValidateProperties(material, true);
-                    }
+                    UniUnlit.Utils.SetRenderMode(material, UniUnlit.UniUnlitRenderMode.Opaque);
                 }
-            );
+                else if (src.alphaMode == "BLEND")
+                {
+                    UniUnlit.Utils.SetRenderMode(material, UniUnlit.UniUnlitRenderMode.Transparent);
+                }
+                else if (src.alphaMode == "MASK")
+                {
+                    UniUnlit.Utils.SetRenderMode(material, UniUnlit.UniUnlitRenderMode.Cutout);
+                    material.SetFloat("_Cutoff", src.alphaCutoff);
+                }
+                else
+                {
+                    // default OPAQUE
+                    UniUnlit.Utils.SetRenderMode(material, UniUnlit.UniUnlitRenderMode.Opaque);
+                }
+
+                // culling
+                if (src.doubleSided)
+                {
+                    UniUnlit.Utils.SetCullMode(material, UniUnlit.UniUnlitCullMode.Off);
+                }
+                else
+                {
+                    UniUnlit.Utils.SetCullMode(material, UniUnlit.UniUnlitCullMode.Back);
+                }
+
+                // VColor
+                var hasVertexColor = data.GLTF.MaterialHasVertexColor(i);
+                if (hasVertexColor)
+                {
+                    UniUnlit.Utils.SetVColBlendMode(material, UniUnlit.UniUnlitVertexColorBlendOp.Multiply);
+                }
+
+                UniUnlit.Utils.ValidateProperties(material, true);
+            });
 
             return true;
         }

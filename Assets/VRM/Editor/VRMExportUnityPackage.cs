@@ -188,40 +188,40 @@ namespace VRM.DevOnly.PackageExporter
 
         public static void CreateUnityPackages(string outputDir)
         {
+            // UniVRM and sub packages
             {
                 var packages = new[]{
-                    // VRM
-                    new PackageInfo("UniVRM")
+                    new PackageInfo("UniVRM0X")
                     {
                         List = new []{
-                            new GlobList("Assets/VRMShaders"),
-                            new GlobList("Assets/UniGLTF"),
                             new GlobList("Assets/VRM"),
-                        }
-                    },
-                    // VRM_Samples
-                    new PackageInfo("UniVRM_Samples")
-                    {
-                        List = new []{
-                            new GlobList("Assets/VRM_Samples"),
-                        }
-                    },
-                    // VRM-1.0
-                    new PackageInfo("VRM")
-                    {
-                        List = new []{
                             new GlobList("Assets/VRMShaders"),
                             new GlobList("Assets/UniGLTF"),
-                            new GlobList("Assets/VRM10"),
                         }
                     },
-                    // VRM-1.0_Samples
-                    new PackageInfo("VRM_Samples")
+                    new PackageInfo("UniVRM0X-samples")
+                    {
+                        List = new[]{
+                            new GlobList("Assets/VRM.Samples"),
+                            new GlobList("Assets/StreamingAssets/VRM.Samples"),
+                        }
+                    },
+                    new PackageInfo("UniVRM10")
                     {
                         List = new []{
-                            new GlobList("Assets/VRM10_Samples"),
+                            new GlobList("Assets/VRM10"),
+                            new GlobList("Assets/VRMShaders"),
+                            new GlobList("Assets/UniGLTF"),
                         }
                     },
+                    new PackageInfo("UniVRM10-samples")
+                    {
+                        List = new[]{
+                            new GlobList("Assets/VRM10.Samples"),
+                            new GlobList("Assets/UniGLTF.Samples"), // look dev resources
+                            new GlobList("Assets/StreamingAssets/VRM.Samples"),
+                        }
+                    }
                 };
                 foreach (var package in packages)
                 {

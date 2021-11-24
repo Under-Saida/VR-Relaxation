@@ -1,27 +1,15 @@
 # UniGLTF-2.0
 
-* Unity-Supports 2019.4 and later
-* You can import and export glTF-2.0 in Unity's editor and runtime.
-* implement `KHR_materials_unlit`
-* implement `KHR_texture_transform` (partial)
+[glTF](https://github.com/KhronosGroup/glTF) 2.0 importer and exporter.
 
-# Material
+Unity-2018.4 or later is supported.
 
-## PBR
+Below is imported from [DamagedHelmet](https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0/DamagedHelmet). Using unity standard shader.
 
-* Convert as much as possible between glTF pbr and Unity Standard Shader.
-* Converts metal roughness and occlusion RGBA channel incompatibility.
-
-## Unlit
-
-* import: UniGLTF's own `UniGLTF/UniUnlit` shader.
-* export: You can export `UniGLTF/UniUnlit` and Unity unilt materials.
-
-* Only `UniGLTF/UniUnlit` supports vertex colors.
-
-## URP
-
-* import only. experimental
+![standard shader](doc/pbr_to_standard.png)
+![duck](doc/duck.png)
+![animation](doc/animation.gif)
+![SciFiHelmet](doc/SciFiHelmet.png)
 
 # License
 
@@ -31,11 +19,7 @@
 
 * https://github.com/vrm-c/UniVRM/releases
 
-# Screenshots
+UniGLTF is part of UniVRM.
+From UniVRM-0.63.2, UniGLTF is separated from UniVRM.
 
-You can import almost all of [gltf_sample_models](https://github.com/KhronosGroup/glTF-Sample-Models/tree/master/2.0)
-
-![standard shader](doc/pbr_to_standard.png)
-![duck](doc/duck.png)
-![animation](doc/animation.gif)
-![SciFiHelmet](doc/SciFiHelmet.png)
+* https://vrm.dev/docs/univrm/gltf/unigltf/

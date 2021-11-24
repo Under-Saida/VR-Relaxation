@@ -16,41 +16,24 @@ namespace VRM
 
         public MaterialDescriptor Get(GltfData data, int i)
         {
-            // legacy "VRM/UnlitTransparentZWrite"
-            if (VRMUnlitTransparentZWriteMaterialImporter.TryCreateParam(data, m_vrm, i, out var matDesc))
-            {
-                return matDesc;
-            }
-
             // mtoon
-            if (VRMMToonMaterialImporter.TryCreateParam(data, m_vrm, i, out matDesc))
+            if (!VRMMToonMaterialImporter.TryCreateParam(data, m_vrm, i, out MaterialDescriptor matDesc))
             {
-                return matDesc;
+                // unlit
+                if (!GltfUnlitMaterialImporter.TryCreateParam(data, i, out matDesc))
+                {
+                    // pbr
+                    if (!GltfPbrMaterialImporter.TryCreateParam(data, i, out matDesc))
+                    {
+                        // fallback
+#if VRM_DEVELOP
+                        Debug.LogWarning($"material: {i} out of range. fallback");
+#endif
+                        return new MaterialDescriptor(GltfMaterialDescriptorGenerator.GetMaterialName(i, null), GltfPbrMaterialImporter.ShaderName);
+                    }
+                }
             }
-
-            // unlit
-            if (GltfUnlitMaterialImporter.TryCreateParam(data, i, out matDesc))
-            {
-                return matDesc;
-            }
-
-            // pbr
-            if (GltfPbrMaterialImporter.TryCreateParam(data, i, out matDesc))
-            {
-                return matDesc;
-            }
-
-            // fallback
-            Debug.LogWarning($"fallback");
-            return new MaterialDescriptor(
-                GltfMaterialDescriptorGenerator.GetMaterialName(i, null),
-                GltfPbrMaterialImporter.ShaderName,
-                null,
-                new Dictionary<string, TextureDescriptor>(),
-                new Dictionary<string, float>(),
-                new Dictionary<string, Color>(),
-                new Dictionary<string, Vector4>(),
-                new Action<Material>[]{});
+            return matDesc;
         }
     }
 }

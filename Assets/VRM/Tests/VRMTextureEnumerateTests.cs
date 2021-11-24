@@ -58,8 +58,7 @@ namespace VRM
                                 }
                             },
                         }
-                    },
-                    default
+                    }
                 );
                 var vrm = new glTF_VRM_extensions
                 {
@@ -120,8 +119,7 @@ namespace VRM
                             }
                         },
                     }
-                },
-                default
+                }
             );
             var vrm = new glTF_VRM_extensions
             {

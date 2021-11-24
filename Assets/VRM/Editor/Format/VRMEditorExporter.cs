@@ -222,13 +222,13 @@ namespace VRM
 
             // 出力
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var data = new UniGLTF.ExportingGltfData();
-            using (var exporter = new VRMExporter(data, settings.MeshExportSettings))
+            var gltf = new UniGLTF.glTF();
+            using (var exporter = new VRMExporter(gltf))
             {
                 exporter.Prepare(target);
-                exporter.Export(new EditorTextureSerializer());
+                exporter.Export(settings.MeshExportSettings, new EditorTextureSerializer());
             }
-            var bytes = data.ToGlbBytes();
+            var bytes = gltf.ToGlbBytes();
             Debug.LogFormat("Export elapsed {0}", sw.Elapsed);
             return bytes;
         }

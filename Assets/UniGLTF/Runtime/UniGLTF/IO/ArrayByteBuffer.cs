@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
 
 
@@ -25,7 +24,7 @@ namespace UniGLTF
             m_bytes = bytes;
         }
 
-        public glTFBufferView Extend<T>(ArraySegment<T> array, glBufferTarget target = default) where T : struct
+        public glTFBufferView Extend<T>(ArraySegment<T> array, glBufferTarget target) where T : struct
         {
             using (var pin = Pin.Create(array))
             {

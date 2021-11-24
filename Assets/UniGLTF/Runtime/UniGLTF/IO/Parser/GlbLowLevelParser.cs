@@ -35,7 +35,7 @@ namespace UniGLTF
                     _path,
                     Encoding.UTF8.GetString(jsonBytes.Array, jsonBytes.Offset, jsonBytes.Count),
                     chunks,
-                    default,
+                    new SimpleStorage(chunks[1].Bytes),
                     new MigrationFlags()
                 );
             }
@@ -91,6 +91,13 @@ namespace UniGLTF
             FixMaterialNameUnique(GLTF);
             FixNodeName(GLTF);
             FixAnimationNameUnique(GLTF);
+
+            // parepare byte buffer
+            //GLTF.baseDir = System.IO.Path.GetDirectoryName(Path);
+            foreach (var buffer in GLTF.buffers)
+            {
+                buffer.OpenStorage(storage);
+            }
 
             return new GltfData(path, json, GLTF, chunks, storage, migrationFlags);
         }
@@ -167,8 +174,7 @@ namespace UniGLTF
         /// </summary>
         private static void FixTextureNameUnique(glTF GLTF)
         {
-            // NOTE: Windows FileSystem は大文字小文字の違いは同名ファイルとして扱ってしまうため, IgnoreCase で評価する.
-            var used = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var used = new HashSet<string>();
             for (var textureIdx = 0; textureIdx < GLTF.textures.Count; ++textureIdx)
             {
                 var gltfTexture = GLTF.textures[textureIdx];
@@ -194,8 +200,7 @@ namespace UniGLTF
 
         private static void FixMaterialNameUnique(glTF GLTF)
         {
-            // NOTE: Windows FileSystem は大文字小文字の違いは同名ファイルとして扱ってしまうため, IgnoreCase で評価する.
-            var used = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var used = new HashSet<string>();
             for (var materialIdx = 0; materialIdx < GLTF.materials.Count; ++materialIdx)
             {
                 var material = GLTF.materials[materialIdx];
@@ -226,8 +231,7 @@ namespace UniGLTF
 
         private static void FixAnimationNameUnique(glTF GLTF)
         {
-            // NOTE: Windows FileSystem は大文字小文字の違いは同名ファイルとして扱ってしまうため, IgnoreCase で評価する.
-            var used = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var used = new HashSet<string>();
             for (int i = 0; i < GLTF.animations.Count; ++i)
             {
                 var animation = GLTF.animations[i];

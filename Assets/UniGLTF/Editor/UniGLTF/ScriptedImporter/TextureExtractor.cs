@@ -17,6 +17,7 @@ namespace UniGLTF
         public GltfData Data => m_data;
 
         public glTF GLTF => m_data.GLTF;
+        public IStorage Storage => m_data.Storage;
 
         public readonly Dictionary<SubAssetKey, UnityPath> Textures = new Dictionary<SubAssetKey, UnityPath>();
         private readonly IReadOnlyDictionary<SubAssetKey, Texture> m_subAssets;

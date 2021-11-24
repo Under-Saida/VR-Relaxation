@@ -206,7 +206,7 @@ namespace UniGLTF
             {
                 var offset = m.GetTextureOffset(propertyName);
                 var scale = m.GetTextureScale(propertyName);
-                (scale, offset) = TextureTransform.VerticalFlipScaleOffset(scale, offset);
+                offset.y = 1.0f - offset.y - scale.y;
 
                 glTF_KHR_texture_transform.Serialize(textureInfo, (offset.x, offset.y), (scale.x, scale.y));
             }
@@ -220,7 +220,7 @@ namespace UniGLTF
                 case "Unlit/Texture":
                 case "Unlit/Transparent":
                 case "Unlit/Transparent Cutout":
-                case UniUnlit.UniUnlitUtil.ShaderName:
+                case "UniGLTF/UniUnlit":
                     return true;
 
                 default:
@@ -244,7 +244,7 @@ namespace UniGLTF
                 case "Unlit/Transparent Cutout":
                     return Export_UnlitCutout(m);
 
-                case UniUnlit.UniUnlitUtil.ShaderName:
+                case "UniGLTF/UniUnlit":
                     return Export_UniUnlit(m);
 
                 default:
@@ -285,7 +285,7 @@ namespace UniGLTF
         {
             var material = glTF_KHR_materials_unlit.CreateDefault();
 
-            var renderMode = UniUnlit.UniUnlitUtil.GetRenderMode(m);
+            var renderMode = UniUnlit.Utils.GetRenderMode(m);
             if (renderMode == UniUnlitRenderMode.Opaque)
             {
                 material.alphaMode = glTFBlendMode.OPAQUE.ToString();
@@ -304,7 +304,7 @@ namespace UniGLTF
                 material.alphaMode = glTFBlendMode.OPAQUE.ToString();
             }
 
-            var cullMode = UniUnlit.UniUnlitUtil.GetCullMode(m);
+            var cullMode = UniUnlit.Utils.GetCullMode(m);
             if (cullMode == UniUnlitCullMode.Off)
             {
                 material.doubleSided = true;

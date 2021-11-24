@@ -25,6 +25,7 @@ namespace UniGLTF
                 w.Write(8.0f);
                 bytes = ms.ToArray();
             }
+            var storage = new SimpleStorage(new ArraySegment<byte>(bytes));
 
             var gltf = new glTF
             {
@@ -53,9 +54,9 @@ namespace UniGLTF
                     }
                 }
             };
+            gltf.buffers[0].OpenStorage(storage);
 
-            var data = GltfData.CreateFromGltfDataForTest(gltf, new ArraySegment<byte>(bytes));
-            var (getter, len) = WeightsAccessor.GetAccessor(data, 0);
+            var (getter, len) = WeightsAccessor.GetAccessor(gltf, 0);
             Assert.AreEqual((1.0f, 2.0f, 3.0f, 4.0f), getter(0));
             Assert.AreEqual((5.0f, 6.0f, 7.0f, 8.0f), getter(1));
         }
@@ -117,7 +118,9 @@ namespace UniGLTF
         [Test]
         public void SharedVertexBufferTest()
         {
-            var data = new ExportingGltfData(50 * 1024 * 1024);
+            var glTF = new glTF();
+            var bytesBuffer = new ArrayByteBuffer(new byte[50 * 1024 * 1024]);
+            var bufferIndex = glTF.AddBuffer(bytesBuffer);
 
             var Materials = new List<Material>{
                 new Material(Shader.Find("Standard")), // A
@@ -133,14 +136,12 @@ namespace UniGLTF
 
             var unityMesh = MeshExportList.Create(go);
             var (gltfMesh, blendShapeIndexMap) = meshExportSettings.DivideVertexBuffer
-                ? MeshExporter_DividedVertexBuffer.Export(data, unityMesh, Materials, axisInverter, meshExportSettings)
-                : MeshExporter_SharedVertexBuffer.Export(data, unityMesh, Materials, axisInverter, meshExportSettings)
+                ? MeshExporter_DividedVertexBuffer.Export(glTF, bufferIndex, unityMesh, Materials, axisInverter, meshExportSettings)
+                : MeshExporter_SharedVertexBuffer.Export(glTF, bufferIndex, unityMesh, Materials,axisInverter, meshExportSettings)
                 ;
 
-            var parsed = GltfData.CreateFromGltfDataForTest(data.GLTF, data.BinBytes);
-
             {
-                var indices = parsed.GetIndices(gltfMesh.primitives[0].indices);
+                var indices = glTF.GetIndices(gltfMesh.primitives[0].indices);
                 Assert.AreEqual(0, indices[0]);
                 Assert.AreEqual(1, indices[1]);
                 Assert.AreEqual(5, indices[2]);
@@ -148,9 +149,8 @@ namespace UniGLTF
                 Assert.AreEqual(1, indices[4]);
                 Assert.AreEqual(4, indices[5]);
             }
-
             {
-                var indices = parsed.GetIndices(gltfMesh.primitives[1].indices);
+                var indices = glTF.GetIndices(gltfMesh.primitives[1].indices);
                 Assert.AreEqual(1, indices[0]);
                 Assert.AreEqual(2, indices[1]);
                 Assert.AreEqual(4, indices[2]);
@@ -159,14 +159,16 @@ namespace UniGLTF
                 Assert.AreEqual(3, indices[5]);
             }
 
-            var positions = parsed.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[0].attributes.POSITION);
+            var positions = glTF.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[0].attributes.POSITION);
             Assert.AreEqual(6, positions.Length);
         }
 
         [Test]
         public void DividedVertexBufferTest()
         {
-            var data = new ExportingGltfData(50 * 1024 * 1024);
+            var glTF = new glTF();
+            var bytesBuffer = new ArrayByteBuffer(new byte[50 * 1024 * 1024]);
+            var bufferIndex = glTF.AddBuffer(bytesBuffer);
 
             var Materials = new List<Material>{
                 new Material(Shader.Find("Standard")), // A
@@ -182,13 +184,12 @@ namespace UniGLTF
 
             var unityMesh = MeshExportList.Create(go);
             var (gltfMesh, blendShapeIndexMap) = meshExportSettings.DivideVertexBuffer
-                ? MeshExporter_DividedVertexBuffer.Export(data, unityMesh, Materials, axisInverter, meshExportSettings)
-                : MeshExporter_SharedVertexBuffer.Export(data, unityMesh, Materials, axisInverter, meshExportSettings)
+                ? MeshExporter_DividedVertexBuffer.Export(glTF, bufferIndex, unityMesh, Materials, axisInverter, meshExportSettings)
+                : MeshExporter_SharedVertexBuffer.Export(glTF, bufferIndex, unityMesh, Materials,axisInverter, meshExportSettings)
                 ;
 
-            var parsed = GltfData.CreateFromGltfDataForTest(data.GLTF, data.BinBytes);
             {
-                var indices = parsed.GetIndices(gltfMesh.primitives[0].indices);
+                var indices = glTF.GetIndices(gltfMesh.primitives[0].indices);
                 Assert.AreEqual(0, indices[0]);
                 Assert.AreEqual(1, indices[1]);
                 Assert.AreEqual(3, indices[2]);
@@ -197,12 +198,12 @@ namespace UniGLTF
                 Assert.AreEqual(2, indices[5]);
             }
             {
-                var positions = parsed.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[0].attributes.POSITION);
+                var positions = glTF.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[0].attributes.POSITION);
                 Assert.AreEqual(4, positions.Length);
             }
 
             {
-                var indices = parsed.GetIndices(gltfMesh.primitives[1].indices);
+                var indices = glTF.GetIndices(gltfMesh.primitives[1].indices);
                 Assert.AreEqual(0, indices[0]);
                 Assert.AreEqual(1, indices[1]);
                 Assert.AreEqual(3, indices[2]);
@@ -211,7 +212,7 @@ namespace UniGLTF
                 Assert.AreEqual(2, indices[5]);
             }
             {
-                var positions = parsed.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[1].attributes.POSITION);
+                var positions = glTF.GetArrayFromAccessor<Vector3>(gltfMesh.primitives[1].attributes.POSITION);
                 Assert.AreEqual(4, positions.Length);
             }
         }

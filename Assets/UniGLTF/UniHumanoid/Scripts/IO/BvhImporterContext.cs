@@ -12,7 +12,7 @@ using UnityEditor;
 namespace UniHumanoid
 {
     [Obsolete("use BvhImporterContext")]
-    public class ImporterContext : BvhImporterContext
+    public class ImporterContext: BvhImporterContext
     {
     }
 
@@ -52,13 +52,8 @@ namespace UniHumanoid
 
         public void Parse(string path)
         {
-            Parse(path, File.ReadAllText(path, Encoding.UTF8));
-        }
-
-        public void Parse(string path, string source)
-        {
             Path = path;
-            Source = source;
+            Source = File.ReadAllText(Path, Encoding.UTF8);
             Bvh = Bvh.Parse(Source);
         }
 
