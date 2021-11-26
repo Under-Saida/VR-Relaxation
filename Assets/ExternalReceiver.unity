@@ -141,12 +141,12 @@ PrefabInstance:
     - target: {fileID: 8979885870847773968, guid: 1eb802dcf4b94614087bf58b2ec247e7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8979885870847773968, guid: 1eb802dcf4b94614087bf58b2ec247e7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8979885870847773968, guid: 1eb802dcf4b94614087bf58b2ec247e7,
         type: 3}
@@ -437,6 +437,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SampleAvater_C
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300705589756840136, guid: 643cbd7e6fd42314da481f73a65e33d6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 643cbd7e6fd42314da481f73a65e33d6, type: 3}
