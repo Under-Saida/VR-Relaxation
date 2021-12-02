@@ -1,4 +1,4 @@
-﻿Shader "Unlit/NewUnlitShader"
+﻿Shader "Custom_Translucent"
 {
     Properties
     {
@@ -14,6 +14,15 @@
 
             Pass
             {
+                ZWrite ON
+                ColorMask 0
+            }
+
+            Pass
+            {
+                ZWrite OFF
+                Ztest LEqual
+
                 CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
