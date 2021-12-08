@@ -50,7 +50,8 @@ public class TrackerTracking : MonoBehaviour
         TrackerRotation = TrackerRotationQ.eulerAngles;
 
         //取得したデータを表示（T1D：Tracker1位置，T1R：Tracker1回転）
-        Debug.Log(trackerType + " Pos:" + TrackerPosition.x + ", " + TrackerPosition.y + ", " + TrackerPosition.z + "\n");
+        Debug.Log(this.gameObject.name + " Pos:" + TrackerPosition.x + ", " + TrackerPosition.y + ", " + TrackerPosition.z + "\n");
+        Debug.Log(this.gameObject.name + " Rot:" + TrackerRotation.x + ", " + TrackerRotation.y + ", " + TrackerRotation.z + "\n");
         //Debug.Log(trackerType + " Pos:" + TrackerPosition_default.x + ", " + TrackerPosition_default.y + ", " + TrackerPosition_default.z + "\n");
         //trackerType + " Rot:" + TrackerRotation.x + ", " + TrackerRotation.y + ", " + TrackerRotation.z
 
@@ -58,12 +59,6 @@ public class TrackerTracking : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             TrackerPosition_default = tracker.GetLocalPosition(trackerType);
-        }
-        
-        //初期位置の位置と比較し、y座標が一定数上だと足をあげたとみなす
-        if (TrackerPosition_default.y + 0.25f < TrackerPosition.y)
-        {
-            raise_flag = true;
         }
     }
 }
