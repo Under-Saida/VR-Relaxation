@@ -27,21 +27,21 @@ public class CheckBoneInfo : MonoBehaviour
 
     bool CheckBonePostionDifference() 
     {
-        // 差分の絶対値が0.05以下なら、動きが合っているとする。
-        if (Mathf.Abs(HeadPos_diff.x) < 0.05 && Mathf.Abs(HeadPos_diff.y) < 0.05 && Mathf.Abs(HeadPos_diff.z) < 0.05 && 
-            Mathf.Abs(NeckPos_diff.x) < 0.05 && Mathf.Abs(NeckPos_diff.y) < 0.05 && Mathf.Abs(NeckPos_diff.z) < 0.05 &&
+        // 差分の絶対値が一定値以下なら、動きが合っているとする。
+        if (Mathf.Abs(HeadPos_diff.x) < 0.2 && Mathf.Abs(HeadPos_diff.y) < 0.2 && Mathf.Abs(HeadPos_diff.z) < 0.2 && 
+            Mathf.Abs(NeckPos_diff.x) < 0.2 && Mathf.Abs(NeckPos_diff.y) < 0.2 && Mathf.Abs(NeckPos_diff.z) < 0.2 &&
 
-            Mathf.Abs(LeftShoulderPos_diff.x) < 0.05 && Mathf.Abs(LeftShoulderPos_diff.y) < 0.05 && Mathf.Abs(LeftShoulderPos_diff.z) < 0.05 &&
-            Mathf.Abs(RightShoulderPos_diff.x) < 0.05 && Mathf.Abs(RightShoulderPos_diff.y) < 0.05 && Mathf.Abs(RightShoulderPos_diff.z) < 0.05 &&
+            Mathf.Abs(LeftShoulderPos_diff.x) < 0.2 && Mathf.Abs(LeftShoulderPos_diff.y) < 0.2 && Mathf.Abs(LeftShoulderPos_diff.z) < 0.2 &&
+            Mathf.Abs(RightShoulderPos_diff.x) < 0.2 && Mathf.Abs(RightShoulderPos_diff.y) < 0.2 && Mathf.Abs(RightShoulderPos_diff.z) < 0.2 &&
 
-            Mathf.Abs(LeftUpperArmPos_diff.x) < 0.05 && Mathf.Abs(LeftUpperArmPos_diff.y) < 0.05 && Mathf.Abs(LeftUpperArmPos_diff.z) < 0.05 &&
-            Mathf.Abs(RightUpperArmPos_diff.x) < 0.05 && Mathf.Abs(RightUpperArmPos_diff.y) < 0.05 && Mathf.Abs(RightUpperArmPos_diff.z) < 0.05 &&
+            Mathf.Abs(LeftUpperArmPos_diff.x) < 0.2 && Mathf.Abs(LeftUpperArmPos_diff.y) < 0.2 && Mathf.Abs(LeftUpperArmPos_diff.z) < 0.2 &&
+            Mathf.Abs(RightUpperArmPos_diff.x) < 0.2 && Mathf.Abs(RightUpperArmPos_diff.y) < 0.2 && Mathf.Abs(RightUpperArmPos_diff.z) < 0.2 &&
 
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmPos_diff.y) < 0.05 && Mathf.Abs(LeftLowerArmPos_diff.z) < 0.05 &&
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.05 &&
+            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.y) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.z) < 0.2 &&
+            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 &&
 
-            Mathf.Abs(LeftHandPos_diff.x) < 0.05 && Mathf.Abs(LeftHandPos_diff.y) < 0.05 && Mathf.Abs(LeftHandPos_diff.z) < 0.05 &&
-            Mathf.Abs(RightHandPos_diff.x) < 0.05 && Mathf.Abs(RightHandPos_diff.y) < 0.05 && Mathf.Abs(RightHandPos_diff.z) < 0.05)
+            Mathf.Abs(LeftHandPos_diff.x) < 0.2 && Mathf.Abs(LeftHandPos_diff.y) < 0.2 && Mathf.Abs(LeftHandPos_diff.z) < 0.2 &&
+            Mathf.Abs(RightHandPos_diff.x) < 0.2 && Mathf.Abs(RightHandPos_diff.y) < 0.2 && Mathf.Abs(RightHandPos_diff.z) < 0.2)
         {
             bonePosCheck_ok = true;
             return bonePosCheck_ok;
@@ -55,21 +55,21 @@ public class CheckBoneInfo : MonoBehaviour
 
     bool CheckBoneRotationDifference()
     {
-        // 差分の絶対値が0.05以下なら、動きが合っているとする。
-        if (Mathf.Abs(HeadRot_diff.x) < 0.05 && Mathf.Abs(HeadRot_diff.y) < 0.05 && Mathf.Abs(HeadRot_diff.z) < 0.05 &&
-            Mathf.Abs(NeckRot_diff.x) < 0.05 && Mathf.Abs(NeckRot_diff.y) < 0.05 && Mathf.Abs(NeckRot_diff.z) < 0.05 &&
+        // 差分の絶対値が一定値以下なら、動きが合っているとする。
+        if (Mathf.Abs(HeadRot_diff.x) < 30 && Mathf.Abs(HeadRot_diff.y) < 30 && Mathf.Abs(HeadRot_diff.z) < 30 &&
+            Mathf.Abs(NeckRot_diff.x) < 30 && Mathf.Abs(NeckRot_diff.y) < 30 && Mathf.Abs(NeckRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftShoulderRot_diff.x) < 0.05 && Mathf.Abs(LeftShoulderRot_diff.y) < 0.05 && Mathf.Abs(LeftShoulderRot_diff.z) < 0.05 &&
-            Mathf.Abs(RightShoulderRot_diff.x) < 0.05 && Mathf.Abs(RightShoulderRot_diff.y) < 0.05 && Mathf.Abs(RightShoulderRot_diff.z) < 0.05 &&
+            Mathf.Abs(LeftShoulderRot_diff.x) < 30 && Mathf.Abs(LeftShoulderRot_diff.y) < 30 && Mathf.Abs(LeftShoulderRot_diff.z) < 30 &&
+            Mathf.Abs(RightShoulderRot_diff.x) < 30 && Mathf.Abs(RightShoulderRot_diff.y) < 30 && Mathf.Abs(RightShoulderRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftUpperArmRot_diff.x) < 0.05 && Mathf.Abs(LeftUpperArmRot_diff.y) < 0.05 && Mathf.Abs(LeftUpperArmRot_diff.z) < 0.05 &&
-            Mathf.Abs(RightUpperArmRot_diff.x) < 0.05 && Mathf.Abs(RightUpperArmRot_diff.y) < 0.05 && Mathf.Abs(RightUpperArmRot_diff.z) < 0.05 &&
+            Mathf.Abs(LeftUpperArmRot_diff.x) < 30 && Mathf.Abs(LeftUpperArmRot_diff.y) < 30 && Mathf.Abs(LeftUpperArmRot_diff.z) < 30 &&
+            Mathf.Abs(RightUpperArmRot_diff.x) < 30 && Mathf.Abs(RightUpperArmRot_diff.y) < 30 && Mathf.Abs(RightUpperArmRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftLowerArmRot_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmRot_diff.y) < 0.05 && Mathf.Abs(LeftLowerArmRot_diff.z) < 0.05 &&
-            Mathf.Abs(LeftLowerArmRot_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmRot_diff.x) < 0.05 && Mathf.Abs(LeftLowerArmRot_diff.x) < 0.05 &&
+            Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.y) < 30 && Mathf.Abs(LeftLowerArmRot_diff.z) < 30 &&
+            Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 &&
 
-            Mathf.Abs(LeftHandRot_diff.x) < 0.05 && Mathf.Abs(LeftHandRot_diff.y) < 0.05 && Mathf.Abs(LeftHandRot_diff.z) < 0.05 &&
-            Mathf.Abs(RightHandRot_diff.x) < 0.05 && Mathf.Abs(RightHandRot_diff.y) < 0.05 && Mathf.Abs(RightHandRot_diff.z) < 0.05)
+            Mathf.Abs(LeftHandRot_diff.x) < 30 && Mathf.Abs(LeftHandRot_diff.y) < 30 && Mathf.Abs(LeftHandRot_diff.z) < 30 &&
+            Mathf.Abs(RightHandRot_diff.x) < 30 && Mathf.Abs(RightHandRot_diff.y) < 30 && Mathf.Abs(RightHandRot_diff.z) < 30)
         {
             boneRotCheck_ok = true;
             return boneRotCheck_ok;
@@ -347,17 +347,25 @@ public class CheckBoneInfo : MonoBehaviour
         RightHandRot_diff = clone_boneinfo.transRightHand.rotation.eulerAngles - my_boneinfo.transRightHand.rotation.eulerAngles;
 
         // Bone情報の取得に使用（普段はコメントアウトしておく）
-        ExportCloneBoneInfo();
-        ExportBonePosition_diff();
-        ExportBoneRotation_diff();
+        //ExportCloneBoneInfo();
+        //ExportBonePosition_diff();
+        //ExportBoneRotation_diff();
 
 
-        // 各ボーンのPositionの差分が一定以下であればTrueを返す。
-        if (CheckBonePostionDifference() == true && CheckBoneRotationDifference() == true)
+        //各ボーンのPositionの差分が一定以下であればTrueを返す。
+        if (CheckBonePostionDifference() == true)
         {
             clone_animator.SetBool("bone_distance_check", true);
             audio.PlayOneShot(ok, 0.8f);
         }
         else clone_animator.SetBool("bone_distance_check", false);
+
+
+        //if (CheckBonePostionDifference() == true && CheckBoneRotationDifference() == true)
+        //{
+        //    clone_animator.SetBool("bone_distance_check", true);
+        //    audio.PlayOneShot(ok, 0.8f);
+        //}
+        //else clone_animator.SetBool("bone_distance_check", false);
     }
 }
