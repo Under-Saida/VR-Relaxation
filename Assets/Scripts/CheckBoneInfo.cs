@@ -20,7 +20,7 @@ public class CheckBoneInfo : MonoBehaviour
     Transform cloneHead, cloneNeck, cloneLeftShoulder, cloneRightShoulder, cloneLeftUpperArm, cloneRightUpperArm, cloneLeftLowerArm, cloneRightLowerArm, cloneLeftHand, cloneRightHand;
     
     Vector3 HeadPos_diff, NeckPos_diff, LeftShoulderPos_diff, RightShoulderPos_diff, LeftUpperArmPos_diff, RightUpperArmPos_diff, LeftLowerArmPos_diff, RightLowerArmPos_diff, LeftHandPos_diff, RightHandPos_diff;
-    Vector3 HeadRot_diff, NeckRot_diff, LeftShoulderRot_diff, RightShoulderRot_diff, LeftUpperArmRot_diff, RightUpperArmRot_diff, LeftLowerArmRot_diff, RightLowerArmRot_diff, LeftHandRot_diff, RightHandRot_diff;
+    //Vector3 HeadRot_diff, NeckRot_diff, LeftShoulderRot_diff, RightShoulderRot_diff, LeftUpperArmRot_diff, RightUpperArmRot_diff, LeftLowerArmRot_diff, RightLowerArmRot_diff, LeftHandRot_diff, RightHandRot_diff;
 
     float time_hold, time_relax;
 
@@ -33,20 +33,11 @@ public class CheckBoneInfo : MonoBehaviour
     bool CheckBonePostionDifference() 
     {
         // 差分の絶対値が一定値以下なら、動きが合っているとする。 閾値を一度大きくする + magnitudeで取得を行う
-        if (Mathf.Abs(HeadPos_diff.x) < 0.5f && Mathf.Abs(HeadPos_diff.y) < 0.5f && Mathf.Abs(HeadPos_diff.z) < 0.5f && 
-            Mathf.Abs(NeckPos_diff.x) < 0.5f && Mathf.Abs(NeckPos_diff.y) < 0.5f && Mathf.Abs(NeckPos_diff.z) < 0.5f &&
-
-            Mathf.Abs(LeftShoulderPos_diff.x) < 0.35f && Mathf.Abs(LeftShoulderPos_diff.y) < 0.35f && Mathf.Abs(LeftShoulderPos_diff.z) < 0.35f &&
-            Mathf.Abs(RightShoulderPos_diff.x) < 0.35f && Mathf.Abs(RightShoulderPos_diff.y) < 0.35f && Mathf.Abs(RightShoulderPos_diff.z) < 0.35f &&
-
-            Mathf.Abs(LeftUpperArmPos_diff.x) < 0.35f && Mathf.Abs(LeftUpperArmPos_diff.y) < 0.35f && Mathf.Abs(LeftUpperArmPos_diff.z) < 0.35f &&
-            Mathf.Abs(RightUpperArmPos_diff.x) < 0.35f && Mathf.Abs(RightUpperArmPos_diff.y) < 0.35f && Mathf.Abs(RightUpperArmPos_diff.z) < 0.35f &&
-
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.y) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.z) < 0.35f &&
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f &&
-
-            Mathf.Abs(LeftHandPos_diff.x) < 0.35f && Mathf.Abs(LeftHandPos_diff.y) < 0.35f && Mathf.Abs(LeftHandPos_diff.z) < 0.35f &&
-            Mathf.Abs(RightHandPos_diff.x) < 0.35f && Mathf.Abs(RightHandPos_diff.y) < 0.35f && Mathf.Abs(RightHandPos_diff.z) < 0.35f)
+        if (HeadPos_diff.magnitude < 0.35f && NeckPos_diff.magnitude < 0.35f && 
+            LeftShoulderPos_diff.magnitude < 0.35f && RightShoulderPos_diff.magnitude < 0.35f &&
+            LeftUpperArmPos_diff.magnitude < 0.35f && RightUpperArmPos_diff.magnitude < 0.35f &&
+            LeftLowerArmPos_diff.magnitude < 0.35f && RightLowerArmPos_diff.magnitude < 0.35f &&
+            LeftHandPos_diff.magnitude < 0.35f && RightHandPos_diff.magnitude < 0.35f)
         {
             bonePosCheck_ok = true;
             return bonePosCheck_ok;
@@ -58,33 +49,33 @@ public class CheckBoneInfo : MonoBehaviour
         }
     }
 
-    bool CheckBoneRotationDifference()
-    {
-        // 差分の絶対値が一定値以下なら、動きが合っているとする。
-        if (Mathf.Abs(HeadRot_diff.x) < 30 && Mathf.Abs(HeadRot_diff.y) < 30 && Mathf.Abs(HeadRot_diff.z) < 30 &&
-            Mathf.Abs(NeckRot_diff.x) < 30 && Mathf.Abs(NeckRot_diff.y) < 30 && Mathf.Abs(NeckRot_diff.z) < 30 &&
+    //bool CheckBoneRotationDifference()
+    //{
+    //    // 差分の絶対値が一定値以下なら、動きが合っているとする。
+    //    if (Mathf.Abs(HeadRot_diff.x) < 30 && Mathf.Abs(HeadRot_diff.y) < 30 && Mathf.Abs(HeadRot_diff.z) < 30 &&
+    //        Mathf.Abs(NeckRot_diff.x) < 30 && Mathf.Abs(NeckRot_diff.y) < 30 && Mathf.Abs(NeckRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftShoulderRot_diff.x) < 30 && Mathf.Abs(LeftShoulderRot_diff.y) < 30 && Mathf.Abs(LeftShoulderRot_diff.z) < 30 &&
-            Mathf.Abs(RightShoulderRot_diff.x) < 30 && Mathf.Abs(RightShoulderRot_diff.y) < 30 && Mathf.Abs(RightShoulderRot_diff.z) < 30 &&
+    //        Mathf.Abs(LeftShoulderRot_diff.x) < 30 && Mathf.Abs(LeftShoulderRot_diff.y) < 30 && Mathf.Abs(LeftShoulderRot_diff.z) < 30 &&
+    //        Mathf.Abs(RightShoulderRot_diff.x) < 30 && Mathf.Abs(RightShoulderRot_diff.y) < 30 && Mathf.Abs(RightShoulderRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftUpperArmRot_diff.x) < 30 && Mathf.Abs(LeftUpperArmRot_diff.y) < 30 && Mathf.Abs(LeftUpperArmRot_diff.z) < 30 &&
-            Mathf.Abs(RightUpperArmRot_diff.x) < 30 && Mathf.Abs(RightUpperArmRot_diff.y) < 30 && Mathf.Abs(RightUpperArmRot_diff.z) < 30 &&
+    //        Mathf.Abs(LeftUpperArmRot_diff.x) < 30 && Mathf.Abs(LeftUpperArmRot_diff.y) < 30 && Mathf.Abs(LeftUpperArmRot_diff.z) < 30 &&
+    //        Mathf.Abs(RightUpperArmRot_diff.x) < 30 && Mathf.Abs(RightUpperArmRot_diff.y) < 30 && Mathf.Abs(RightUpperArmRot_diff.z) < 30 &&
 
-            Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.y) < 30 && Mathf.Abs(LeftLowerArmRot_diff.z) < 30 &&
-            Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 &&
+    //        Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.y) < 30 && Mathf.Abs(LeftLowerArmRot_diff.z) < 30 &&
+    //        Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 &&
 
-            Mathf.Abs(LeftHandRot_diff.x) < 30 && Mathf.Abs(LeftHandRot_diff.y) < 30 && Mathf.Abs(LeftHandRot_diff.z) < 30 &&
-            Mathf.Abs(RightHandRot_diff.x) < 30 && Mathf.Abs(RightHandRot_diff.y) < 30 && Mathf.Abs(RightHandRot_diff.z) < 30)
-        {
-            boneRotCheck_ok = true;
-            return boneRotCheck_ok;
-        }
-        else
-        {
-            boneRotCheck_ok = false;
-            return boneRotCheck_ok;
-        }
-    }
+    //        Mathf.Abs(LeftHandRot_diff.x) < 30 && Mathf.Abs(LeftHandRot_diff.y) < 30 && Mathf.Abs(LeftHandRot_diff.z) < 30 &&
+    //        Mathf.Abs(RightHandRot_diff.x) < 30 && Mathf.Abs(RightHandRot_diff.y) < 30 && Mathf.Abs(RightHandRot_diff.z) < 30)
+    //    {
+    //        boneRotCheck_ok = true;
+    //        return boneRotCheck_ok;
+    //    }
+    //    else
+    //    {
+    //        boneRotCheck_ok = false;
+    //        return boneRotCheck_ok;
+    //    }
+    //}
 
     void ExportCloneBoneInfo()
     {
@@ -193,58 +184,58 @@ public class CheckBoneInfo : MonoBehaviour
         R_handPos_diff.Close();
     }
 
-    void ExportBoneRotation_diff()
-    {
-        //HeadRot_diff
-        StreamWriter headRot_diff = new StreamWriter("../data/BoneRotation_diff/HeadRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        headRot_diff.WriteLine(HeadRot_diff);
-        headRot_diff.Close();
+    //void ExportBoneRotation_diff()
+    //{
+    //    //HeadRot_diff
+    //    StreamWriter headRot_diff = new StreamWriter("../data/BoneRotation_diff/HeadRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    headRot_diff.WriteLine(HeadRot_diff);
+    //    headRot_diff.Close();
 
-        //NeckRot_diff
-        StreamWriter neckRot_diff = new StreamWriter("../data/BoneRotation_diff/NeckRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        neckRot_diff.WriteLine(NeckRot_diff);
-        neckRot_diff.Close();
+    //    //NeckRot_diff
+    //    StreamWriter neckRot_diff = new StreamWriter("../data/BoneRotation_diff/NeckRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    neckRot_diff.WriteLine(NeckRot_diff);
+    //    neckRot_diff.Close();
 
-        //LeftShoulderRot_diff
-        StreamWriter L_shoulderRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        L_shoulderRot_diff.WriteLine(LeftShoulderRot_diff);
-        L_shoulderRot_diff.Close();
+    //    //LeftShoulderRot_diff
+    //    StreamWriter L_shoulderRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    L_shoulderRot_diff.WriteLine(LeftShoulderRot_diff);
+    //    L_shoulderRot_diff.Close();
 
-        //RightShoulderRot_diff
-        StreamWriter R_shoulder_diff = new StreamWriter("../data/BoneRotation_diff/RightShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        R_shoulder_diff.WriteLine(RightShoulderRot_diff);
-        R_shoulder_diff.Close();
+    //    //RightShoulderRot_diff
+    //    StreamWriter R_shoulder_diff = new StreamWriter("../data/BoneRotation_diff/RightShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    R_shoulder_diff.WriteLine(RightShoulderRot_diff);
+    //    R_shoulder_diff.Close();
 
-        //LeftUpperArmRot_diff
-        StreamWriter L_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        L_upperArmRot_diff.WriteLine(LeftUpperArmRot_diff);
-        L_upperArmRot_diff.Close();
+    //    //LeftUpperArmRot_diff
+    //    StreamWriter L_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    L_upperArmRot_diff.WriteLine(LeftUpperArmRot_diff);
+    //    L_upperArmRot_diff.Close();
 
-        //RightUpperArmRot_diff
-        StreamWriter R_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        R_upperArmRot_diff.WriteLine(RightUpperArmRot_diff);
-        R_upperArmRot_diff.Close();
+    //    //RightUpperArmRot_diff
+    //    StreamWriter R_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    R_upperArmRot_diff.WriteLine(RightUpperArmRot_diff);
+    //    R_upperArmRot_diff.Close();
 
-        //LeftLowerArmRot_diff
-        StreamWriter L_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        L_lowerArmRot_diff.WriteLine(LeftLowerArmRot_diff);
-        L_lowerArmRot_diff.Close();
+    //    //LeftLowerArmRot_diff
+    //    StreamWriter L_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    L_lowerArmRot_diff.WriteLine(LeftLowerArmRot_diff);
+    //    L_lowerArmRot_diff.Close();
 
-        //RightLowerArmRot_diff
-        StreamWriter R_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        R_lowerArmRot_diff.WriteLine(RightLowerArmRot_diff);
-        R_lowerArmRot_diff.Close();
+    //    //RightLowerArmRot_diff
+    //    StreamWriter R_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    R_lowerArmRot_diff.WriteLine(RightLowerArmRot_diff);
+    //    R_lowerArmRot_diff.Close();
 
-        //LeftHandRot_diff
-        StreamWriter L_handRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        L_handRot_diff.WriteLine(LeftHandRot_diff);
-        L_handRot_diff.Close();
+    //    //LeftHandRot_diff
+    //    StreamWriter L_handRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    L_handRot_diff.WriteLine(LeftHandRot_diff);
+    //    L_handRot_diff.Close();
 
-        //RightHandRot_diff
-        StreamWriter R_handRot_diff = new StreamWriter("../data/BoneRotation_diff/RightHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        R_handRot_diff.WriteLine(RightHandRot_diff);
-        R_handRot_diff.Close();
-    }
+    //    //RightHandRot_diff
+    //    StreamWriter R_handRot_diff = new StreamWriter("../data/BoneRotation_diff/RightHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
+    //    R_handRot_diff.WriteLine(RightHandRot_diff);
+    //    R_handRot_diff.Close();
+    //}
 
     int GetCurrentAnimationStateNum()
     {
@@ -351,32 +342,32 @@ public class CheckBoneInfo : MonoBehaviour
 
 
         // ボーンRotation情報の差分を部位ごとに格納(Vector3に変換)
-        HeadRot_diff = clone_boneinfo.transHead.rotation.eulerAngles - my_boneinfo.transHead.rotation.eulerAngles;
+        //HeadRot_diff = clone_boneinfo.transHead.rotation.eulerAngles - my_boneinfo.transHead.rotation.eulerAngles;
 
-        NeckRot_diff = clone_boneinfo.transNeck.rotation.eulerAngles - my_boneinfo.transNeck.rotation.eulerAngles;
+        //NeckRot_diff = clone_boneinfo.transNeck.rotation.eulerAngles - my_boneinfo.transNeck.rotation.eulerAngles;
 
-        LeftShoulderRot_diff = clone_boneinfo.transLeftShoulder.rotation.eulerAngles - my_boneinfo.transLeftShoulder.rotation.eulerAngles;
+        //LeftShoulderRot_diff = clone_boneinfo.transLeftShoulder.rotation.eulerAngles - my_boneinfo.transLeftShoulder.rotation.eulerAngles;
 
-        RightShoulderRot_diff = clone_boneinfo.transRightShoulder.rotation.eulerAngles - my_boneinfo.transRightShoulder.rotation.eulerAngles;
+        //RightShoulderRot_diff = clone_boneinfo.transRightShoulder.rotation.eulerAngles - my_boneinfo.transRightShoulder.rotation.eulerAngles;
 
-        LeftUpperArmRot_diff = clone_boneinfo.transLeftUpperArm.rotation.eulerAngles - my_boneinfo.transLeftUpperArm.rotation.eulerAngles;
+        //LeftUpperArmRot_diff = clone_boneinfo.transLeftUpperArm.rotation.eulerAngles - my_boneinfo.transLeftUpperArm.rotation.eulerAngles;
 
-        RightUpperArmRot_diff = clone_boneinfo.transRightUpperArm.rotation.eulerAngles - my_boneinfo.transRightUpperArm.rotation.eulerAngles;
+        //RightUpperArmRot_diff = clone_boneinfo.transRightUpperArm.rotation.eulerAngles - my_boneinfo.transRightUpperArm.rotation.eulerAngles;
 
-        LeftLowerArmRot_diff = clone_boneinfo.transLeftLowerArm.rotation.eulerAngles - my_boneinfo.transLeftLowerArm.rotation.eulerAngles;
+        //LeftLowerArmRot_diff = clone_boneinfo.transLeftLowerArm.rotation.eulerAngles - my_boneinfo.transLeftLowerArm.rotation.eulerAngles;
 
-        RightLowerArmRot_diff = clone_boneinfo.transRightLowerArm.rotation.eulerAngles - my_boneinfo.transRightLowerArm.rotation.eulerAngles;
+        //RightLowerArmRot_diff = clone_boneinfo.transRightLowerArm.rotation.eulerAngles - my_boneinfo.transRightLowerArm.rotation.eulerAngles;
 
-        LeftHandRot_diff = clone_boneinfo.transLeftHand.rotation.eulerAngles - my_boneinfo.transLeftHand.rotation.eulerAngles;
+        //LeftHandRot_diff = clone_boneinfo.transLeftHand.rotation.eulerAngles - my_boneinfo.transLeftHand.rotation.eulerAngles;
 
-        RightHandRot_diff = clone_boneinfo.transRightHand.rotation.eulerAngles - my_boneinfo.transRightHand.rotation.eulerAngles;
+        //RightHandRot_diff = clone_boneinfo.transRightHand.rotation.eulerAngles - my_boneinfo.transRightHand.rotation.eulerAngles;
 
         // Bone情報の取得に使用（普段はコメントアウトしておく）
         //ExportCloneBoneInfo();
         //ExportBonePosition_diff();
         //ExportBoneRotation_diff();
 
-        GetCurrentAnimationStateNum();
+        //GetCurrentAnimationStateNum();
 
         //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
         if (CheckBonePostionDifference() == true)
@@ -384,39 +375,44 @@ public class CheckBoneInfo : MonoBehaviour
             time_hold += Time.deltaTime;
 
             //if (hasHold == false && time_hold > 5.0f)
-            if (time_hold > 5.0f)
+            if (hasHold ==false && time_hold > 10.0f)
             {
-                //hasHold = true;
+                hasHold = true;
                 time_hold = 0;
-                audio.PlayOneShot(ok, 0.8f);
-                clone_animator.SetBool("bone_distance_check", true);
+                audio.PlayOneShot(ok, 0.9f);
+                //clone_animator.SetBool("bone_distance_check", true);
             }
 
         }
         else
         {
+            hasHold = false;
             time_hold = 0;
             clone_animator.SetBool("bone_distance_check", false);
         }
 
 
         // Hold(力を籠める)状態が終えれば、Relax(力を抜く)状態に移行し、20秒経過後、次の筋弛緩法の動きに遷移する。
-        //if (hasHold == true)
-        //{
-        //    time_relax += Time.deltaTime;
-            
-        //    if(time_relax > 10.0f)
-        //    {
-        //        audio.PlayOneShot(ok, 0.8f);
-        //        clone_animator.SetBool("bone_distance_check", true);
-                
-        //        time_relax = 0;
-        //        time_hold = 0;
-        //        nextStateNum += 1;
-        //        hasHold = false;
-        //    }
-        //}
-        //clone_animator.SetBool("bone_distance_check", false);
+        if (hasHold == true)
+        {
+            time_relax += Time.deltaTime;
+
+            if (time_relax > 20.0f)
+            {
+                //audio.PlayOneShot(ok, 0.8f);
+                clone_animator.SetBool("bone_distance_check", true);
+
+                time_relax = 0;
+                time_hold = 0;
+                //nextStateNum += 1;
+                hasHold = false;
+            }
+        }
+        else
+        {
+            time_relax = 0;
+            clone_animator.SetBool("bone_distance_check", false);
+        }
 
 
         //if (CheckBonePostionDifference() == true && CheckBoneRotationDifference() == true)
