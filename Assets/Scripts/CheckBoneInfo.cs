@@ -22,26 +22,31 @@ public class CheckBoneInfo : MonoBehaviour
     Vector3 HeadPos_diff, NeckPos_diff, LeftShoulderPos_diff, RightShoulderPos_diff, LeftUpperArmPos_diff, RightUpperArmPos_diff, LeftLowerArmPos_diff, RightLowerArmPos_diff, LeftHandPos_diff, RightHandPos_diff;
     Vector3 HeadRot_diff, NeckRot_diff, LeftShoulderRot_diff, RightShoulderRot_diff, LeftUpperArmRot_diff, RightUpperArmRot_diff, LeftLowerArmRot_diff, RightLowerArmRot_diff, LeftHandRot_diff, RightHandRot_diff;
 
+    float time_hold, time_relax;
+
+    int currentStateNum, nextStateNum = 1;
+
     bool bonePosCheck_ok, boneRotCheck_ok;
+    bool hasHold = false;
 
 
     bool CheckBonePostionDifference() 
     {
-        // 差分の絶対値が一定値以下なら、動きが合っているとする。
-        if (Mathf.Abs(HeadPos_diff.x) < 0.2 && Mathf.Abs(HeadPos_diff.y) < 0.2 && Mathf.Abs(HeadPos_diff.z) < 0.2 && 
-            Mathf.Abs(NeckPos_diff.x) < 0.2 && Mathf.Abs(NeckPos_diff.y) < 0.2 && Mathf.Abs(NeckPos_diff.z) < 0.2 &&
+        // 差分の絶対値が一定値以下なら、動きが合っているとする。 閾値を一度大きくする + magnitudeで取得を行う
+        if (Mathf.Abs(HeadPos_diff.x) < 0.5f && Mathf.Abs(HeadPos_diff.y) < 0.5f && Mathf.Abs(HeadPos_diff.z) < 0.5f && 
+            Mathf.Abs(NeckPos_diff.x) < 0.5f && Mathf.Abs(NeckPos_diff.y) < 0.5f && Mathf.Abs(NeckPos_diff.z) < 0.5f &&
 
-            Mathf.Abs(LeftShoulderPos_diff.x) < 0.2 && Mathf.Abs(LeftShoulderPos_diff.y) < 0.2 && Mathf.Abs(LeftShoulderPos_diff.z) < 0.2 &&
-            Mathf.Abs(RightShoulderPos_diff.x) < 0.2 && Mathf.Abs(RightShoulderPos_diff.y) < 0.2 && Mathf.Abs(RightShoulderPos_diff.z) < 0.2 &&
+            Mathf.Abs(LeftShoulderPos_diff.x) < 0.35f && Mathf.Abs(LeftShoulderPos_diff.y) < 0.35f && Mathf.Abs(LeftShoulderPos_diff.z) < 0.35f &&
+            Mathf.Abs(RightShoulderPos_diff.x) < 0.35f && Mathf.Abs(RightShoulderPos_diff.y) < 0.35f && Mathf.Abs(RightShoulderPos_diff.z) < 0.35f &&
 
-            Mathf.Abs(LeftUpperArmPos_diff.x) < 0.2 && Mathf.Abs(LeftUpperArmPos_diff.y) < 0.2 && Mathf.Abs(LeftUpperArmPos_diff.z) < 0.2 &&
-            Mathf.Abs(RightUpperArmPos_diff.x) < 0.2 && Mathf.Abs(RightUpperArmPos_diff.y) < 0.2 && Mathf.Abs(RightUpperArmPos_diff.z) < 0.2 &&
+            Mathf.Abs(LeftUpperArmPos_diff.x) < 0.35f && Mathf.Abs(LeftUpperArmPos_diff.y) < 0.35f && Mathf.Abs(LeftUpperArmPos_diff.z) < 0.35f &&
+            Mathf.Abs(RightUpperArmPos_diff.x) < 0.35f && Mathf.Abs(RightUpperArmPos_diff.y) < 0.35f && Mathf.Abs(RightUpperArmPos_diff.z) < 0.35f &&
 
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.y) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.z) < 0.2 &&
-            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.2 &&
+            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.y) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.z) < 0.35f &&
+            Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f && Mathf.Abs(LeftLowerArmPos_diff.x) < 0.35f &&
 
-            Mathf.Abs(LeftHandPos_diff.x) < 0.2 && Mathf.Abs(LeftHandPos_diff.y) < 0.2 && Mathf.Abs(LeftHandPos_diff.z) < 0.2 &&
-            Mathf.Abs(RightHandPos_diff.x) < 0.2 && Mathf.Abs(RightHandPos_diff.y) < 0.2 && Mathf.Abs(RightHandPos_diff.z) < 0.2)
+            Mathf.Abs(LeftHandPos_diff.x) < 0.35f && Mathf.Abs(LeftHandPos_diff.y) < 0.35f && Mathf.Abs(LeftHandPos_diff.z) < 0.35f &&
+            Mathf.Abs(RightHandPos_diff.x) < 0.35f && Mathf.Abs(RightHandPos_diff.y) < 0.35f && Mathf.Abs(RightHandPos_diff.z) < 0.35f)
         {
             bonePosCheck_ok = true;
             return bonePosCheck_ok;
@@ -241,6 +246,25 @@ public class CheckBoneInfo : MonoBehaviour
         R_handRot_diff.Close();
     }
 
+    int GetCurrentAnimationStateNum()
+    {
+        //clone_animator = GetComponent<Animator>();
+        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Sit_T-Pose"))
+        {
+            currentStateNum = 0;
+        }
+        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Arm"))
+        {
+            currentStateNum = 1;
+        }
+        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Shoulder"))
+        {
+            currentStateNum = 2;
+        }
+        Debug.Log(currentStateNum);
+        return currentStateNum;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -257,6 +281,7 @@ public class CheckBoneInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // 自身アバタのボーンにあるTransform情報を部位ごとに格納
         myHead = my_boneinfo.transHead;
 
@@ -351,14 +376,47 @@ public class CheckBoneInfo : MonoBehaviour
         //ExportBonePosition_diff();
         //ExportBoneRotation_diff();
 
+        GetCurrentAnimationStateNum();
 
-        //各ボーンのPositionの差分が一定以下であればTrueを返す。
+        //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
         if (CheckBonePostionDifference() == true)
         {
-            clone_animator.SetBool("bone_distance_check", true);
-            audio.PlayOneShot(ok, 0.8f);
+            time_hold += Time.deltaTime;
+
+            //if (hasHold == false && time_hold > 5.0f)
+            if (time_hold > 5.0f)
+            {
+                //hasHold = true;
+                time_hold = 0;
+                audio.PlayOneShot(ok, 0.8f);
+                clone_animator.SetBool("bone_distance_check", true);
+            }
+
         }
-        else clone_animator.SetBool("bone_distance_check", false);
+        else
+        {
+            time_hold = 0;
+            clone_animator.SetBool("bone_distance_check", false);
+        }
+
+
+        // Hold(力を籠める)状態が終えれば、Relax(力を抜く)状態に移行し、20秒経過後、次の筋弛緩法の動きに遷移する。
+        //if (hasHold == true)
+        //{
+        //    time_relax += Time.deltaTime;
+            
+        //    if(time_relax > 10.0f)
+        //    {
+        //        audio.PlayOneShot(ok, 0.8f);
+        //        clone_animator.SetBool("bone_distance_check", true);
+                
+        //        time_relax = 0;
+        //        time_hold = 0;
+        //        nextStateNum += 1;
+        //        hasHold = false;
+        //    }
+        //}
+        //clone_animator.SetBool("bone_distance_check", false);
 
 
         //if (CheckBonePostionDifference() == true && CheckBoneRotationDifference() == true)

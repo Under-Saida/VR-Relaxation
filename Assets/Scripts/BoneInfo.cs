@@ -7,7 +7,7 @@ public class BoneInfo : MonoBehaviour
 {
     private Animator anime;
     private AnimatorStateInfo currentState;
-    private GameObject VRMModel;
+    public  GameObject VRMModel;
 
     public Transform transHead, transNeck, transLeftShoulder, transRightShoulder, transLeftUpperArm, transRightUpperArm, transLeftLowerArm, transRightLowerArm, transLeftHand, transRightHand;
 
