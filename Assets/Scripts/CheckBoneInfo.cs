@@ -24,7 +24,7 @@ public class CheckBoneInfo : MonoBehaviour
 
     float time_hold, time_relax;
 
-    int currentStateNum, nextStateNum = 1;
+    int StateNum = 0, currentStateNum;
 
     bool bonePosCheck_ok, boneRotCheck_ok;
     bool hasHold = false;
@@ -252,7 +252,7 @@ public class CheckBoneInfo : MonoBehaviour
         {
             currentStateNum = 2;
         }
-        Debug.Log(currentStateNum);
+        Debug.Log("現在のアニメーションの状態" + currentStateNum);
         return currentStateNum;
     }
 
@@ -367,28 +367,27 @@ public class CheckBoneInfo : MonoBehaviour
         //ExportBonePosition_diff();
         //ExportBoneRotation_diff();
 
-        //GetCurrentAnimationStateNum();
+        GetCurrentAnimationStateNum();
+        Debug.Log("アニメーション用の判定用" + StateNum);
 
         //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
-        if (CheckBonePostionDifference() == true)
+        if (hasHold == false && CheckBonePostionDifference() == true)
         {
             time_hold += Time.deltaTime;
 
-            //if (hasHold == false && time_hold > 5.0f)
-            if (hasHold ==false && time_hold > 10.0f)
+            if (time_hold > 5.0f)
             {
                 hasHold = true;
                 time_hold = 0;
                 audio.PlayOneShot(ok, 0.9f);
-                //clone_animator.SetBool("bone_distance_check", true);
             }
 
         }
         else
         {
-            hasHold = false;
+            //hasHold = false;
             time_hold = 0;
-            clone_animator.SetBool("bone_distance_check", false);
+            //clone_animator.SetBool("bone_distance_check", false);
         }
 
 
@@ -397,22 +396,34 @@ public class CheckBoneInfo : MonoBehaviour
         {
             time_relax += Time.deltaTime;
 
-            if (time_relax > 20.0f)
+            if (time_relax > 10.0f)
             {
-                //audio.PlayOneShot(ok, 0.8f);
-                clone_animator.SetBool("bone_distance_check", true);
+                audio.PlayOneShot(ok, 0.8f);
 
+                while(GetCurrentAnimationStateNum() == StateNum)
+                {
+                    clone_animator.SetBool("bone_distance_check", true);
+                }
+                //StateNum += 1;
+                //hasHold = false;
                 time_relax = 0;
                 time_hold = 0;
-                //nextStateNum += 1;
-                hasHold = false;
+
             }
         }
-        else
+ 
+        if (GetCurrentAnimationStateNum() != StateNum)
         {
-            time_relax = 0;
             clone_animator.SetBool("bone_distance_check", false);
+            hasHold = false;
+            time_relax = 0;
+            time_hold = 0;
+            StateNum += 1;
+
         }
+
+
+
 
 
         //if (CheckBonePostionDifference() == true && CheckBoneRotationDifference() == true)
