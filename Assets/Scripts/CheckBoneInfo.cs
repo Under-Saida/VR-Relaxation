@@ -11,10 +11,9 @@ public class CheckBoneInfo : MonoBehaviour
     public AudioClip ok;
     
     AudioSource audio;
-    
-    Animator clone_animator;
-
+  
     BoneInfo my_boneinfo, clone_boneinfo;
+    PMR_AnimationController pmr_animation_controller;
 
     Transform myHead, myNeck, myLeftShoulder, myRightShoulder, myLeftUpperArm, myRightUpperArm, myLeftLowerArm, myRightLowerArm, myLeftHand, myRightHand;
     Transform cloneHead, cloneNeck, cloneLeftShoulder, cloneRightShoulder, cloneLeftUpperArm, cloneRightUpperArm, cloneLeftLowerArm, cloneRightLowerArm, cloneLeftHand, cloneRightHand;
@@ -26,18 +25,34 @@ public class CheckBoneInfo : MonoBehaviour
 
     int StateNum = 0, currentStateNum;
 
-    bool bonePosCheck_ok, boneRotCheck_ok;
-    bool hasHold = false;
+    bool bonePosCheck_ok, boneRotCheck_ok, endPose;
+    public bool hasHold = false, hasRelax = false;
+
+
+    // 筋弛緩法の動きのフェーズが一周したか確認し、bool値で返す
+    public bool CheckBoolState()
+    {
+        if(hasHold == true && hasRelax == true)
+        {
+            endPose = true;
+            return endPose;
+        }
+        else
+        {
+            endPose = false;
+            return endPose;
+        }
+    }
 
 
     bool CheckBonePostionDifference() 
     {
         // 差分の絶対値が一定値以下なら、動きが合っているとする。 閾値を一度大きくする + magnitudeで取得を行う
-        if (HeadPos_diff.magnitude < 0.35f && NeckPos_diff.magnitude < 0.35f && 
-            LeftShoulderPos_diff.magnitude < 0.35f && RightShoulderPos_diff.magnitude < 0.35f &&
-            LeftUpperArmPos_diff.magnitude < 0.35f && RightUpperArmPos_diff.magnitude < 0.35f &&
-            LeftLowerArmPos_diff.magnitude < 0.35f && RightLowerArmPos_diff.magnitude < 0.35f &&
-            LeftHandPos_diff.magnitude < 0.35f && RightHandPos_diff.magnitude < 0.35f)
+        if (HeadPos_diff.magnitude < 0.3f && NeckPos_diff.magnitude < 0.3f && 
+            LeftShoulderPos_diff.magnitude < 0.3f && RightShoulderPos_diff.magnitude < 0.3f &&
+            LeftUpperArmPos_diff.magnitude < 0.3f && RightUpperArmPos_diff.magnitude < 0.3f &&
+            LeftLowerArmPos_diff.magnitude < 0.3f && RightLowerArmPos_diff.magnitude < 0.3f &&
+            LeftHandPos_diff.magnitude < 0.3f && RightHandPos_diff.magnitude < 0.3f)
         {
             bonePosCheck_ok = true;
             return bonePosCheck_ok;
@@ -237,25 +252,6 @@ public class CheckBoneInfo : MonoBehaviour
     //    R_handRot_diff.Close();
     //}
 
-    int GetCurrentAnimationStateNum()
-    {
-        //clone_animator = GetComponent<Animator>();
-        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Sit_T-Pose"))
-        {
-            currentStateNum = 0;
-        }
-        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Arm"))
-        {
-            currentStateNum = 1;
-        }
-        if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Shoulder"))
-        {
-            currentStateNum = 2;
-        }
-        Debug.Log("現在のアニメーションの状態" + currentStateNum);
-        return currentStateNum;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -264,7 +260,7 @@ public class CheckBoneInfo : MonoBehaviour
 
         cloneVRM = GameObject.Find("SampleAvatar_C(Clone)");
         clone_boneinfo = cloneVRM.GetComponent<BoneInfo>();
-        clone_animator = cloneVRM.GetComponent<Animator>();
+        pmr_animation_controller = cloneVRM.GetComponent<PMR_AnimationController>();
 
         audio = GetComponent<AudioSource>();
     }
@@ -272,6 +268,15 @@ public class CheckBoneInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // アニメーションの変更が終了した場合、関連する変数の値をリセットする
+        if(pmr_animation_controller.GethasEndAnimaton() == true)
+        {
+            hasHold = false;
+            hasRelax = false;
+            time_hold = 0;
+            time_relax = 0;
+            pmr_animation_controller.hasEndAnimaton = false;
+        }
 
         // 自身アバタのボーンにあるTransform情報を部位ごとに格納
         myHead = my_boneinfo.transHead;
@@ -319,25 +324,25 @@ public class CheckBoneInfo : MonoBehaviour
 
 
         // ボーンPosition情報の差分を部位ごとに格納(Vector3に変換)
-        HeadPos_diff = clone_boneinfo.transHead.position - my_boneinfo.transHead.position;
+        HeadPos_diff = cloneHead.position - myHead.position;
 
-        NeckPos_diff = clone_boneinfo.transNeck.position - my_boneinfo.transNeck.position;
+        NeckPos_diff = cloneNeck.position - myNeck.position;
 
-        LeftShoulderPos_diff = clone_boneinfo.transLeftShoulder.position - my_boneinfo.transLeftShoulder.position;
+        LeftShoulderPos_diff = cloneLeftShoulder.position - myLeftShoulder.position;
 
-        RightShoulderPos_diff = clone_boneinfo.transRightShoulder.position - my_boneinfo.transRightShoulder.position;
+        RightShoulderPos_diff = cloneRightShoulder.position - myRightShoulder.position;
 
-        LeftUpperArmPos_diff = clone_boneinfo.transLeftUpperArm.position - my_boneinfo.transLeftUpperArm.position;
+        LeftUpperArmPos_diff = cloneLeftUpperArm.position - myLeftUpperArm.position;
 
-        RightUpperArmPos_diff = clone_boneinfo.transRightUpperArm.position - my_boneinfo.transRightUpperArm.position;
+        RightUpperArmPos_diff = cloneRightUpperArm.position - myRightUpperArm.position;
 
-        LeftLowerArmPos_diff = clone_boneinfo.transLeftLowerArm.position - my_boneinfo.transLeftLowerArm.position;
+        LeftLowerArmPos_diff = cloneLeftLowerArm.position - myLeftLowerArm.position;
 
-        RightLowerArmPos_diff = clone_boneinfo.transRightLowerArm.position - my_boneinfo.transRightLowerArm.position;
+        RightLowerArmPos_diff = cloneRightLowerArm.position - myRightLowerArm.position;
 
-        LeftHandPos_diff = clone_boneinfo.transLeftHand.position - my_boneinfo.transLeftHand.position;
+        LeftHandPos_diff = cloneLeftHand.position - myLeftHand.position;
 
-        RightHandPos_diff = clone_boneinfo.transRightHand.position - my_boneinfo.transRightHand.position;
+        RightHandPos_diff = cloneRightHand.position - myRightHand.position;
 
 
 
@@ -367,15 +372,16 @@ public class CheckBoneInfo : MonoBehaviour
         //ExportBonePosition_diff();
         //ExportBoneRotation_diff();
 
-        GetCurrentAnimationStateNum();
-        Debug.Log("アニメーション用の判定用" + StateNum);
+        //GetCurrentAnimationStateNum();
+        //Debug.Log("アニメーション用の判定用" + StateNum);
+
 
         //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
         if (hasHold == false && CheckBonePostionDifference() == true)
         {
             time_hold += Time.deltaTime;
 
-            if (time_hold > 5.0f)
+            if (time_hold > 10.0f)
             {
                 hasHold = true;
                 time_hold = 0;
@@ -385,9 +391,8 @@ public class CheckBoneInfo : MonoBehaviour
         }
         else
         {
-            //hasHold = false;
+            //hasHold = false
             time_hold = 0;
-            //clone_animator.SetBool("bone_distance_check", false);
         }
 
 
@@ -396,31 +401,21 @@ public class CheckBoneInfo : MonoBehaviour
         {
             time_relax += Time.deltaTime;
 
-            if (time_relax > 10.0f)
+            if (time_relax > 20.0f)
             {
                 audio.PlayOneShot(ok, 0.8f);
-
-                while(GetCurrentAnimationStateNum() == StateNum)
-                {
-                    clone_animator.SetBool("bone_distance_check", true);
-                }
-                //StateNum += 1;
-                //hasHold = false;
-                time_relax = 0;
-                time_hold = 0;
+                hasRelax = true;
 
             }
         }
- 
-        if (GetCurrentAnimationStateNum() != StateNum)
+        else
         {
-            clone_animator.SetBool("bone_distance_check", false);
-            hasHold = false;
+            //hasRelax = false;
             time_relax = 0;
-            time_hold = 0;
-            StateNum += 1;
-
         }
+
+        // hasHoldとhasRelaxの状態を調べる
+        CheckBoolState();
 
 
 

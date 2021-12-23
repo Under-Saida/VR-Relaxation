@@ -9,6 +9,9 @@ public class EEGdata : MonoBehaviour
 {
     private MindwaveController m_Controller = null;
     public MindwaveDataModel m_MindwaveData;
+
+    PMR_AnimationController pmr_animation_controller;
+
     public int attention1;
     public int meditation1;
     public int Delta;
@@ -22,6 +25,8 @@ public class EEGdata : MonoBehaviour
 
     float Gpull;
     float Cpull;
+
+
 
     // Start is called before the first frame update
     void Start()
