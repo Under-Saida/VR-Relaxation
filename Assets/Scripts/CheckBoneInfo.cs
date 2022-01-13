@@ -48,11 +48,11 @@ public class CheckBoneInfo : MonoBehaviour
     bool CheckBonePostionDifference() 
     {
         // 差分の絶対値が一定値以下なら、動きが合っているとする。 閾値を一度大きくする + magnitudeで取得を行う 0.3fがデフォルト
-        if (HeadPos_diff.magnitude < 0.6f && NeckPos_diff.magnitude < 0.6f && 
-            LeftShoulderPos_diff.magnitude < 0.6f && RightShoulderPos_diff.magnitude < 0.6f &&
-            LeftUpperArmPos_diff.magnitude < 0.6f && RightUpperArmPos_diff.magnitude < 0.6f &&
-            LeftLowerArmPos_diff.magnitude < 0.6f && RightLowerArmPos_diff.magnitude < 0.6f &&
-            LeftHandPos_diff.magnitude < 0.6f && RightHandPos_diff.magnitude < 0.6f)
+        if (HeadPos_diff.magnitude < 0.3f && NeckPos_diff.magnitude < 0.3f && 
+            LeftShoulderPos_diff.magnitude < 0.3f && RightShoulderPos_diff.magnitude < 0.3f &&
+            LeftUpperArmPos_diff.magnitude < 0.3f && RightUpperArmPos_diff.magnitude < 0.3f &&
+            LeftLowerArmPos_diff.magnitude < 0.3f && RightLowerArmPos_diff.magnitude < 0.3f &&
+            LeftHandPos_diff.magnitude < 0.3f && RightHandPos_diff.magnitude < 0.3f)
         {
             bonePosCheck_ok = true;
             return bonePosCheck_ok;
