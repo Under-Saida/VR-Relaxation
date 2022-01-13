@@ -26,8 +26,6 @@ public class BoneInfo : MonoBehaviour
     {
         //アバターの頭のボーン情報を取得し、DebugLogで出力する
         transHead = anime.GetBoneTransform(HumanBodyBones.Head);
-        //Debug.Log(this.gameObject.name + transHead.position);
-        //Debug.Log(transform.rotation.eulerAngles);
 
         //アバターの首のボーン情報を取得する
         transNeck = anime.GetBoneTransform(HumanBodyBones.Neck);
