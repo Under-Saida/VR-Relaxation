@@ -369,7 +369,7 @@ public class CheckBoneInfo : MonoBehaviour
 
         // Bone情報の取得に使用（普段はコメントアウトしておく）
         //ExportCloneBoneInfo();
-        ExportBonePosition_diff();
+        //ExportBonePosition_diff();
         //ExportBoneRotation_diff();
 
         //GetCurrentAnimationStateNum();
