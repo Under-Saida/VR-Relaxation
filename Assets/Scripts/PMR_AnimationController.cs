@@ -29,7 +29,7 @@ public class PMR_AnimationController : MonoBehaviour
         {
             currentStateNum = 2;
         }
-        Debug.Log("現在のアニメーションの状態" + currentStateNum);
+        //Debug.Log("現在のアニメーションの状態" + currentStateNum);
         return currentStateNum;
     }
 
@@ -69,7 +69,7 @@ public class PMR_AnimationController : MonoBehaviour
         }
 
         GethasEndAnimaton();
-        Debug.Log("筋弛緩の流れを一周したか" + hasEndAnimaton);
+        //Debug.Log("筋弛緩の流れを一周したか" + hasEndAnimaton);
 
     }
 }
