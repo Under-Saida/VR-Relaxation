@@ -170,59 +170,6 @@ public class CheckBoneInfo : MonoBehaviour
         R_handPos_diff.Close();
     }
 
-    //void ExportBoneRotation_diff()
-    //{
-    //    //HeadRot_diff
-    //    StreamWriter headRot_diff = new StreamWriter("../data/BoneRotation_diff/HeadRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    headRot_diff.WriteLine(HeadRot_diff);
-    //    headRot_diff.Close();
-
-    //    //NeckRot_diff
-    //    StreamWriter neckRot_diff = new StreamWriter("../data/BoneRotation_diff/NeckRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    neckRot_diff.WriteLine(NeckRot_diff);
-    //    neckRot_diff.Close();
-
-    //    //LeftShoulderRot_diff
-    //    StreamWriter L_shoulderRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    L_shoulderRot_diff.WriteLine(LeftShoulderRot_diff);
-    //    L_shoulderRot_diff.Close();
-
-    //    //RightShoulderRot_diff
-    //    StreamWriter R_shoulder_diff = new StreamWriter("../data/BoneRotation_diff/RightShoulderRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    R_shoulder_diff.WriteLine(RightShoulderRot_diff);
-    //    R_shoulder_diff.Close();
-
-    //    //LeftUpperArmRot_diff
-    //    StreamWriter L_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    L_upperArmRot_diff.WriteLine(LeftUpperArmRot_diff);
-    //    L_upperArmRot_diff.Close();
-
-    //    //RightUpperArmRot_diff
-    //    StreamWriter R_upperArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightUpperArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    R_upperArmRot_diff.WriteLine(RightUpperArmRot_diff);
-    //    R_upperArmRot_diff.Close();
-
-    //    //LeftLowerArmRot_diff
-    //    StreamWriter L_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    L_lowerArmRot_diff.WriteLine(LeftLowerArmRot_diff);
-    //    L_lowerArmRot_diff.Close();
-
-    //    //RightLowerArmRot_diff
-    //    StreamWriter R_lowerArmRot_diff = new StreamWriter("../data/BoneRotation_diff/RightLowerArmRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    R_lowerArmRot_diff.WriteLine(RightLowerArmRot_diff);
-    //    R_lowerArmRot_diff.Close();
-
-    //    //LeftHandRot_diff
-    //    StreamWriter L_handRot_diff = new StreamWriter("../data/BoneRotation_diff/LeftHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    L_handRot_diff.WriteLine(LeftHandRot_diff);
-    //    L_handRot_diff.Close();
-
-    //    //RightHandRot_diff
-    //    StreamWriter R_handRot_diff = new StreamWriter("../data/BoneRotation_diff/RightHandRot_diff.txt", true, Encoding.GetEncoding("Shift_JIS"));
-    //    R_handRot_diff.WriteLine(RightHandRot_diff);
-    //    R_handRot_diff.Close();
-    //}
-
     // Start is called before the first frame update
     void Start()
     {
@@ -315,33 +262,9 @@ public class CheckBoneInfo : MonoBehaviour
 
         RightHandPos_diff = cloneRightHand.position - myRightHand.position;
 
-
-
-        // ボーンRotation情報の差分を部位ごとに格納(Vector3に変換)
-        //HeadRot_diff = clone_boneinfo.transHead.rotation.eulerAngles - my_boneinfo.transHead.rotation.eulerAngles;
-
-        //NeckRot_diff = clone_boneinfo.transNeck.rotation.eulerAngles - my_boneinfo.transNeck.rotation.eulerAngles;
-
-        //LeftShoulderRot_diff = clone_boneinfo.transLeftShoulder.rotation.eulerAngles - my_boneinfo.transLeftShoulder.rotation.eulerAngles;
-
-        //RightShoulderRot_diff = clone_boneinfo.transRightShoulder.rotation.eulerAngles - my_boneinfo.transRightShoulder.rotation.eulerAngles;
-
-        //LeftUpperArmRot_diff = clone_boneinfo.transLeftUpperArm.rotation.eulerAngles - my_boneinfo.transLeftUpperArm.rotation.eulerAngles;
-
-        //RightUpperArmRot_diff = clone_boneinfo.transRightUpperArm.rotation.eulerAngles - my_boneinfo.transRightUpperArm.rotation.eulerAngles;
-
-        //LeftLowerArmRot_diff = clone_boneinfo.transLeftLowerArm.rotation.eulerAngles - my_boneinfo.transLeftLowerArm.rotation.eulerAngles;
-
-        //RightLowerArmRot_diff = clone_boneinfo.transRightLowerArm.rotation.eulerAngles - my_boneinfo.transRightLowerArm.rotation.eulerAngles;
-
-        //LeftHandRot_diff = clone_boneinfo.transLeftHand.rotation.eulerAngles - my_boneinfo.transLeftHand.rotation.eulerAngles;
-
-        //RightHandRot_diff = clone_boneinfo.transRightHand.rotation.eulerAngles - my_boneinfo.transRightHand.rotation.eulerAngles;
-
         // Bone情報の取得に使用（普段はコメントアウトしておく）
         //ExportCloneBoneInfo();
         //ExportBonePosition_diff();
-        //ExportBoneRotation_diff();
 
         //GetCurrentAnimationStateNum();
         //Debug.Log("アニメーション用の判定用" + StateNum);

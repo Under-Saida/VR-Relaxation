@@ -6,9 +6,21 @@ using Valve.VR;
 public class LeftHand_Controller : MonoBehaviour
 {
     SteamVR_Action_Boolean L_Iui = SteamVR_Actions.default_InteractUI;
-    SteamVR_Action_Vibration L_vibration;
 
     //結果の格納用Boolean型関数interactui
+
+    // 左手のトリガーが押されているか否か判定し、bool値を返す
+    public bool GetLeftHandTrigger_Push()
+    {
+        if (left_interacrtui == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public bool left_interacrtui;
 
@@ -18,12 +30,10 @@ public class LeftHand_Controller : MonoBehaviour
         //結果をGetStateで取得してinteracrtuiに格納
         //SteamVR_Input_Sources.機器名（今回は左コントローラ）
         left_interacrtui = L_Iui.GetState(SteamVR_Input_Sources.LeftHand);
+
+        //interacrtuiの動作状況の確認
+        GetLeftHandTrigger_Push();
         
-        //interacrtuiの中身を確認
-        if (left_interacrtui)
-        {
-            L_vibration.Execute(0, 10.0f, 1000, 1f, SteamVR_Input_Sources.LeftHand);
-            Debug.Log("左トリガーがON");
-        }
+
     }
 }
