@@ -14,7 +14,7 @@ public class PMR_AnimationController : MonoBehaviour
 
     public bool hasEndAnimaton = false;
 
-    int GetCurrentAnimationStateNum()
+    public int GetCurrentAnimationStateNum()
     {
         //clone_animator = GetComponent<Animator>();
         if (clone_animator.GetCurrentAnimatorStateInfo(0).IsName("Sit_T-Pose"))

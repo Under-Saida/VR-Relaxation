@@ -7,7 +7,6 @@ using System.IO;
 public class CheckBoneInfo : MonoBehaviour
 {
     private GameObject myVRM, cloneVRM;
-
     public AudioClip ok;
     
     AudioSource audio;
@@ -45,7 +44,7 @@ public class CheckBoneInfo : MonoBehaviour
     }
 
 
-    bool CheckBonePostionDifference() 
+    public bool CheckBonePostionDifference() 
     {
         // 差分の絶対値が一定値以下なら、動きが合っているとする。 閾値を一度大きくする + magnitudeで取得を行う 0.3fがデフォルト
         if (HeadPos_diff.magnitude < 0.3f && NeckPos_diff.magnitude < 0.3f && 
@@ -63,34 +62,6 @@ public class CheckBoneInfo : MonoBehaviour
             return bonePosCheck_ok;
         }
     }
-
-    //bool CheckBoneRotationDifference()
-    //{
-    //    // 差分の絶対値が一定値以下なら、動きが合っているとする。
-    //    if (Mathf.Abs(HeadRot_diff.x) < 30 && Mathf.Abs(HeadRot_diff.y) < 30 && Mathf.Abs(HeadRot_diff.z) < 30 &&
-    //        Mathf.Abs(NeckRot_diff.x) < 30 && Mathf.Abs(NeckRot_diff.y) < 30 && Mathf.Abs(NeckRot_diff.z) < 30 &&
-
-    //        Mathf.Abs(LeftShoulderRot_diff.x) < 30 && Mathf.Abs(LeftShoulderRot_diff.y) < 30 && Mathf.Abs(LeftShoulderRot_diff.z) < 30 &&
-    //        Mathf.Abs(RightShoulderRot_diff.x) < 30 && Mathf.Abs(RightShoulderRot_diff.y) < 30 && Mathf.Abs(RightShoulderRot_diff.z) < 30 &&
-
-    //        Mathf.Abs(LeftUpperArmRot_diff.x) < 30 && Mathf.Abs(LeftUpperArmRot_diff.y) < 30 && Mathf.Abs(LeftUpperArmRot_diff.z) < 30 &&
-    //        Mathf.Abs(RightUpperArmRot_diff.x) < 30 && Mathf.Abs(RightUpperArmRot_diff.y) < 30 && Mathf.Abs(RightUpperArmRot_diff.z) < 30 &&
-
-    //        Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.y) < 30 && Mathf.Abs(LeftLowerArmRot_diff.z) < 30 &&
-    //        Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 && Mathf.Abs(LeftLowerArmRot_diff.x) < 30 &&
-
-    //        Mathf.Abs(LeftHandRot_diff.x) < 30 && Mathf.Abs(LeftHandRot_diff.y) < 30 && Mathf.Abs(LeftHandRot_diff.z) < 30 &&
-    //        Mathf.Abs(RightHandRot_diff.x) < 30 && Mathf.Abs(RightHandRot_diff.y) < 30 && Mathf.Abs(RightHandRot_diff.z) < 30)
-    //    {
-    //        boneRotCheck_ok = true;
-    //        return boneRotCheck_ok;
-    //    }
-    //    else
-    //    {
-    //        boneRotCheck_ok = false;
-    //        return boneRotCheck_ok;
-    //    }
-    //}
 
     void ExportCloneBoneInfo()
     {
@@ -397,14 +368,14 @@ public class CheckBoneInfo : MonoBehaviour
 
 
         // Hold(力を籠める)状態が終えれば、Relax(力を抜く)状態に移行し、20秒経過後、次の筋弛緩法の動きに遷移する。
-        if (hasHold == true)
+        if (hasHold == true && hasRelax == false)
         {
             time_relax += Time.deltaTime;
 
             if (time_relax > 20.0f)
             {
-                audio.PlayOneShot(ok, 0.8f);
                 hasRelax = true;
+                audio.PlayOneShot(ok, 0.9f);
 
             }
         }
