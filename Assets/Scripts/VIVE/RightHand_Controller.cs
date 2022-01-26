@@ -13,18 +13,18 @@ public class RightHand_Controller : MonoBehaviour
     public bool right_interacrtui;
 
     // 左手のトリガーが押されているか否か判定し、bool値を返す
-    public bool GetRightHandTrigger_Push()
-    {
-        if (right_interacrtui == true)
-        {
-            Debug.Log("右手のトリガーはON");
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    //public bool GetRightHandTrigger_Push()
+    //{
+    //    if (right_interacrtui == true)
+    //    {
+    //        Debug.Log("右手のトリガーはON");
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 
     // Update is called once per frame
     void Update()
@@ -34,6 +34,9 @@ public class RightHand_Controller : MonoBehaviour
         right_interacrtui = R_Iui.GetState(SteamVR_Input_Sources.RightHand);
 
         //interacrtuiの動作状況の確認
-        GetRightHandTrigger_Push();
+        if (right_interacrtui)
+        {
+            Debug.Log("RightHand_Trigger");
+        }
     }
 }

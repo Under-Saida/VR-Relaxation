@@ -34,7 +34,7 @@ public class LeftHand_Controller : MonoBehaviour
         //interacrtuiの動作状況の確認
         //GetLeftHandTrigger_Push();
 
-        if (left_interacrtui == true)
+        if (left_interacrtui)
         {
             Debug.Log("LeftHand_Trigger");
         }
