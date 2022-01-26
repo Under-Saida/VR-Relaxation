@@ -10,17 +10,17 @@ public class LeftHand_Controller : MonoBehaviour
     //結果の格納用Boolean型関数interactui
 
     // 左手のトリガーが押されているか否か判定し、bool値を返す
-    public bool GetLeftHandTrigger_Push()
-    {
-        if (left_interacrtui == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    //public bool GetLeftHandTrigger_Push()
+    //{
+    //    if (left_interacrtui == true)
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 
     public bool left_interacrtui;
 
@@ -32,8 +32,14 @@ public class LeftHand_Controller : MonoBehaviour
         left_interacrtui = L_Iui.GetState(SteamVR_Input_Sources.LeftHand);
 
         //interacrtuiの動作状況の確認
-        GetLeftHandTrigger_Push();
-        
+        //GetLeftHandTrigger_Push();
+
+        if (left_interacrtui == true)
+        {
+            Debug.Log("LeftHand_Trigger");
+        }
+
+
 
     }
 }

@@ -6,7 +6,7 @@ using Valve.VR;
 public class RightHand_Controller : MonoBehaviour
 {
     SteamVR_Action_Boolean R_Iui = SteamVR_Actions.default_InteractUI;
-    SteamVR_Action_Vibration R_vibration;
+    //SteamVR_Action_Vibration R_vibration;
 
     //結果の格納用Boolean型関数interactui
 
@@ -17,6 +17,7 @@ public class RightHand_Controller : MonoBehaviour
     {
         if (right_interacrtui == true)
         {
+            Debug.Log("右手のトリガーはON");
             return true;
         }
         else
