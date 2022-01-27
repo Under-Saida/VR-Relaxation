@@ -20,13 +20,24 @@ public class CheckBoneInfo : MonoBehaviour
     Vector3 HeadPos_diff, NeckPos_diff, LeftShoulderPos_diff, RightShoulderPos_diff, LeftUpperArmPos_diff, RightUpperArmPos_diff, LeftLowerArmPos_diff, RightLowerArmPos_diff, LeftHandPos_diff, RightHandPos_diff;
     //Vector3 HeadRot_diff, NeckRot_diff, LeftShoulderRot_diff, RightShoulderRot_diff, LeftUpperArmRot_diff, RightUpperArmRot_diff, LeftLowerArmRot_diff, RightLowerArmRot_diff, LeftHandRot_diff, RightHandRot_diff;
 
-    float time_hold, time_relax;
+    //float time_hold, time_relax;
+    float time_hold=10.0f, time_relax=20.0f;
 
     int StateNum = 0, currentStateNum;
 
     bool bonePosCheck_ok, boneRotCheck_ok, endPose;
     public bool hasHold = false, hasRelax = false;
 
+
+    public float Get_timeHold()
+    {
+        return time_hold;
+    }
+
+    public float Get_timeRelax()
+    {
+        return time_relax;
+    }
 
     // 筋弛緩法の動きのフェーズが一周したか確認し、bool値で返す
     public bool CheckBoolState()
@@ -58,6 +69,9 @@ public class CheckBoneInfo : MonoBehaviour
         }
         else
         {
+            //デバッグ用
+            //bonePosCheck_ok = true;
+            
             bonePosCheck_ok = false;
             return bonePosCheck_ok;
         }
@@ -178,7 +192,7 @@ public class CheckBoneInfo : MonoBehaviour
 
         cloneVRM = GameObject.Find("SampleAvatar_C(Clone)");
         clone_boneinfo = cloneVRM.GetComponent<BoneInfo>();
-        pmr_animation_controller = cloneVRM.GetComponent<PMR_AnimationController>();
+        pmr_animation_controller = this.gameObject.GetComponent<PMR_AnimationController>();
 
         audio = GetComponent<AudioSource>();
     }
@@ -191,8 +205,8 @@ public class CheckBoneInfo : MonoBehaviour
         {
             hasHold = false;
             hasRelax = false;
-            time_hold = 0;
-            time_relax = 0;
+            time_hold = 10.0f;
+            time_relax = 20.0f;
             pmr_animation_controller.hasEndAnimaton = false;
         }
 
@@ -273,9 +287,10 @@ public class CheckBoneInfo : MonoBehaviour
         //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
         if (hasHold == false && CheckBonePostionDifference() == true)
         {
-            time_hold += Time.deltaTime;
+            time_hold -= Time.deltaTime;
+            Debug.Log("time_hold=" + time_hold);
 
-            if (time_hold > 10.0f)
+            if (time_hold <= 0)
             {
                 hasHold = true;
                 time_hold = 0;
@@ -293,9 +308,9 @@ public class CheckBoneInfo : MonoBehaviour
         // Hold(力を籠める)状態が終えれば、Relax(力を抜く)状態に移行し、20秒経過後、次の筋弛緩法の動きに遷移する。
         if (hasHold == true && hasRelax == false)
         {
-            time_relax += Time.deltaTime;
+            time_relax -= Time.deltaTime;
 
-            if (time_relax > 20.0f)
+            if (time_relax <= 0)
             {
                 hasRelax = true;
                 audio.PlayOneShot(ok, 0.9f);
@@ -305,7 +320,7 @@ public class CheckBoneInfo : MonoBehaviour
         else
         {
             //hasRelax = false;
-            time_relax = 0;
+            time_relax = 20.0f;
         }
 
         // hasHoldとhasRelaxの状態を調べる

@@ -24,59 +24,59 @@ public class UI_Controller : MonoBehaviour
         }
     }
 
-    //void SetValue_Text()
-    //{
-    //    switch (pmr_animation_controller.GetCurrentAnimationStateNum())
-    //    {
-    //        // 座って腕を横に伸ばすポーズの時
-    //        case 0:
+    void SetValue_Text()
+    {
+        switch (pmr_animation_controller.GetCurrentAnimationStateNum())
+        {
+            // 座って腕を横に伸ばすポーズの時
+            case 0:
 
-    //            if (checkbone_info.hasHold == false && checkbone_info.CheckBonePostionDifference() == true)
-    //            {
-    //                Time_UI.value = checkbone_info.Get_timeHold();
-    //                pmrInfo_UI.text = "お手本の動きに合わせ、\n体の動きをキープする\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
-    //            }
-    //            else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
-    //            {
-    //                Time_UI.value = checkbone_info.Get_timeRelax();
-    //                pmrInfo_UI.text = "楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
-    //            }
-    //            break;
+                if (checkbone_info.hasHold == false)
+                {
+                    Time_UI.value = checkbone_info.Get_timeHold();
+                    pmrInfo_UI.text = "お手本の動きに合わせ、\n体の動きをキープする\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
+                }
+                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                {
+                    Time_UI.value = checkbone_info.Get_timeRelax();
+                    pmrInfo_UI.text = "楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
+                }
+                break;
 
-            //// 腕の筋弛緩法の動きの時
-            //case 1:
-            //    if (checkbone_info.hasHold == false)
-            //    {
-            //        Time_UI.value = checkbone_info.time_hold;
-            //        pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.time_hold.ToString("f1") + "秒";
-            //    }
-            //    else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
-            //    {
-            //        Time_UI.value = checkbone_info.time_relax;
-            //        pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.time_relax.ToString("f1") + "秒";
-            //    }
-            //    break;
+            // 腕の筋弛緩法の動きの時
+            case 1:
+                if (checkbone_info.hasHold == false)
+                {
+                    Time_UI.value = checkbone_info.Get_timeHold();
+                    pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
+                }
+                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                {
+                    Time_UI.value = checkbone_info.Get_timeRelax();
+                    pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
+                }
+                break;
 
-            //// 肩の筋弛緩法の動きの時
-            //case 2:
-            //    if (checkbone_info.hasHold == false)
-            //    {
-            //        Time_UI.value = checkbone_info.time_hold;
-            //        pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.time_hold.ToString("f1") + "秒";
-            //    }
-            //    else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
-            //    {
+            // 肩の筋弛緩法の動きの時
+            case 2:
+                if (checkbone_info.hasHold == false)
+                {
+                    Time_UI.value = checkbone_info.Get_timeHold();
+                    pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
+                }
+                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                {
 
-            //        Time_UI.value = checkbone_info.time_relax;
-            //        pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.time_relax.ToString("f1") + "秒";
-            //    }
-            //    break;
+                    Time_UI.value = checkbone_info.Get_timeRelax();
+                    pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
+                }
+                break;
 
-    //        default:
-    //            Debug.Log("アニメーション情報の取得の失敗");
-    //            break;
-    //    }
-    //}
+            default:
+                Debug.Log("アニメーション情報の取得の失敗");
+                break;
+        }
+    }
 
     //void UpdateText()
     //{
@@ -195,7 +195,7 @@ public class UI_Controller : MonoBehaviour
         SetValue_PositionCheck_UI();
 
         // Text情報を更新する
-        //SetValue_Text();
+        SetValue_Text();
 
         //UpdateText();
 
