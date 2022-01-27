@@ -31,9 +31,6 @@ public class CheckInputInfo : MonoBehaviour
         pmr_animation_controller = this.gameObject.GetComponent<PMR_AnimationController>();
         checkbone_info = this.gameObject.GetComponent<CheckBoneInfo>();
 
-        leftHand_controller = GameObject.Find("Controller (left)").GetComponent<LeftHand_Controller>();
-        rightHand_controller = GameObject.Find("Controller (right)").GetComponent<RightHand_Controller>();
-
     }
 
     // Update is called once per frame
