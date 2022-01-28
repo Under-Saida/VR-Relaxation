@@ -77,56 +77,56 @@ public class CheckBoneInfo : MonoBehaviour
         }
     }
 
-    void ExportCloneBoneInfo()
+    void ExportCloneBone_PosInfo()
     {
         //cloneHead
         StreamWriter clone_head = new StreamWriter("../data/CloneBone_data/Head.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_head.WriteLine(cloneHead);
+        clone_head.WriteLine("position={0}", cloneHead.position);
         clone_head.Close();
 
         //cloneNeck
         StreamWriter clone_neck = new StreamWriter("../data/CloneBone_data/Neck.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_neck.WriteLine(cloneNeck);
+        clone_neck.WriteLine("position={0}", cloneNeck.position);
         clone_neck.Close();
 
         //cloneLeftShoulder
         StreamWriter clone_L_shoulder = new StreamWriter("../data/CloneBone_data/LeftShoulder.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_L_shoulder.WriteLine(cloneLeftShoulder);
+        clone_L_shoulder.WriteLine("position={0}", cloneLeftShoulder.position);
         clone_L_shoulder.Close();
 
         //cloneRightShoulder
         StreamWriter clone_R_shoulder = new StreamWriter("../data/CloneBone_data/RightShoulder.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_R_shoulder.WriteLine(cloneRightShoulder);
+        clone_R_shoulder.WriteLine("position.x={0}", cloneRightShoulder.position);
         clone_R_shoulder.Close();
 
         //cloneLeftUpperArm
         StreamWriter clone_L_upperArm = new StreamWriter("../data/CloneBone_data/LeftUpperArm.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_L_upperArm.WriteLine(cloneLeftUpperArm);
+        clone_L_upperArm.WriteLine("position.x={0}", cloneLeftUpperArm.position);
         clone_L_upperArm.Close();
 
         //cloneRightUpperArm
         StreamWriter clone_R_upperArm = new StreamWriter("../data/CloneBone_data/RightUpperArm.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_R_upperArm.WriteLine(cloneRightUpperArm);
+        clone_R_upperArm.WriteLine("position.x={0}", cloneRightUpperArm.position);
         clone_R_upperArm.Close();
 
         //cloneLeftLowerArm
         StreamWriter clone_L_lowerArm = new StreamWriter("../data/CloneBone_data/LeftLowerArm.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_L_lowerArm.WriteLine(cloneLeftLowerArm);
+        clone_L_lowerArm.WriteLine("position.x={0}", cloneLeftLowerArm.position);
         clone_L_lowerArm.Close();
 
         //cloneRightLowerArm
         StreamWriter clone_R_lowerArm = new StreamWriter("../data/CloneBone_data/RightLowerArm.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_R_lowerArm.WriteLine(cloneRightLowerArm);
+        clone_R_lowerArm.WriteLine("position.x={0}", cloneRightLowerArm.position);
         clone_R_lowerArm.Close();
 
         //cloneLeftHand
         StreamWriter clone_L_hand = new StreamWriter("../data/CloneBone_data/LeftHand.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_L_hand.WriteLine(cloneLeftHand);
+        clone_L_hand.WriteLine("position.x={0}", cloneLeftHand.position);
         clone_L_hand.Close();
 
         //cloneRightHand
         StreamWriter clone_R_hand = new StreamWriter("../data/CloneBone_data/RightHand.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        clone_R_hand.WriteLine(cloneRightHand);
+        clone_R_hand.WriteLine("position.x={0}", cloneRightHand.position);
         clone_R_hand.Close();
 
     }
@@ -277,7 +277,7 @@ public class CheckBoneInfo : MonoBehaviour
         RightHandPos_diff = cloneRightHand.position - myRightHand.position;
 
         // Bone情報の取得に使用（普段はコメントアウトしておく）
-        //ExportCloneBoneInfo();
+        ExportCloneBone_PosInfo();
         //ExportBonePosition_diff();
 
         //GetCurrentAnimationStateNum();
@@ -288,12 +288,12 @@ public class CheckBoneInfo : MonoBehaviour
         if (hasHold == false && CheckBonePostionDifference() == true)
         {
             time_hold -= Time.deltaTime;
-            Debug.Log("time_hold=" + time_hold);
+            //Debug.Log("time_hold=" + time_hold);
 
             if (time_hold <= 0)
             {
                 hasHold = true;
-                time_hold = 0;
+                //time_hold = 0;
                 audio.PlayOneShot(ok, 0.9f);
             }
 
@@ -301,7 +301,7 @@ public class CheckBoneInfo : MonoBehaviour
         else
         {
             //hasHold = false
-            time_hold = 0;
+            time_hold = 10.0f;
         }
 
 

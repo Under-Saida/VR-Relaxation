@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UI_Controller : MonoBehaviour
 {
-    public Slider PositionCheck_UI, Time_UI;
+    public Slider PositionCheck_UI;
     public Text pmrInfo_UI;
 
     CheckBoneInfo checkbone_info;
@@ -33,12 +33,12 @@ public class UI_Controller : MonoBehaviour
 
                 if (checkbone_info.hasHold == false)
                 {
-                    Time_UI.value = checkbone_info.Get_timeHold();
+                    
                     pmrInfo_UI.text = "お手本の動きに合わせ、\n体の動きをキープする\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
                 else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
                 {
-                    Time_UI.value = checkbone_info.Get_timeRelax();
+                    
                     pmrInfo_UI.text = "楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
                 }
                 break;
@@ -47,12 +47,12 @@ public class UI_Controller : MonoBehaviour
             case 1:
                 if (checkbone_info.hasHold == false)
                 {
-                    Time_UI.value = checkbone_info.Get_timeHold();
+                   
                     pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
                 else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
                 {
-                    Time_UI.value = checkbone_info.Get_timeRelax();
+                    
                     pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
                 }
                 break;
@@ -61,14 +61,14 @@ public class UI_Controller : MonoBehaviour
             case 2:
                 if (checkbone_info.hasHold == false)
                 {
-                    Time_UI.value = checkbone_info.Get_timeHold();
-                    pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
+                   
+                    pmrInfo_UI.text = "肩に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
                 else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
                 {
 
-                    Time_UI.value = checkbone_info.Get_timeRelax();
-                    pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
+                   
+                    pmrInfo_UI.text = "肩の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
                 }
                 break;
 
