@@ -24,15 +24,10 @@ public class BoneInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //アバターの頭のボーン情報を取得し、DebugLogで出力する
+        
         transHead = anime.GetBoneTransform(HumanBodyBones.Head);
 
-        //アバターの首のボーン情報を取得する
         transNeck = anime.GetBoneTransform(HumanBodyBones.Neck);
-
-        //Spine 背骨の第一ボーン
-
-        //Chest 胸のボーン
 
         transLeftShoulder = anime.GetBoneTransform(HumanBodyBones.LeftShoulder);
 
