@@ -284,28 +284,24 @@ public class CheckBoneInfo : MonoBehaviour
         //Debug.Log("アニメーション用の判定用" + StateNum);
 
 
-        //各ボーンのPositionの差分が一定以下であればTrueを返し、Hold(力を籠める)の時間を計測(10秒)
+        
         if (hasHold == false && CheckBonePostionDifference() == true)
         {
             time_hold -= Time.deltaTime;
-            //Debug.Log("time_hold=" + time_hold);
 
             if (time_hold <= 0)
             {
                 hasHold = true;
-                //time_hold = 0;
                 audio.PlayOneShot(ok, 0.9f);
             }
-
         }
         else
         {
-            //hasHold = false
             time_hold = 10.0f;
         }
 
 
-        // Hold(力を籠める)状態が終えれば、Relax(力を抜く)状態に移行し、20秒経過後、次の筋弛緩法の動きに遷移する。
+        
         if (hasHold == true && hasRelax == false)
         {
             time_relax -= Time.deltaTime;
@@ -319,11 +315,10 @@ public class CheckBoneInfo : MonoBehaviour
         }
         else
         {
-            //hasRelax = false;
             time_relax = 20.0f;
         }
 
-        // hasHoldとhasRelaxの状態を調べる
+        
         CheckBoolState();
 
 
