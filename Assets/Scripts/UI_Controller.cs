@@ -31,12 +31,12 @@ public class UI_Controller : MonoBehaviour
             // 座って腕を横に伸ばすポーズの時
             case 0:
 
-                if (checkbone_info.hasHold == false)
+                if (checkbone_info.GethasHold() == false)
                 {
                     
                     pmrInfo_UI.text = "お手本の動きに合わせ、\n体の動きをキープする\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
-                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                else if (checkbone_info.GethasHold() == true && checkbone_info.GethasRelax() == false)
                 {
                     
                     pmrInfo_UI.text = "楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
@@ -45,12 +45,12 @@ public class UI_Controller : MonoBehaviour
 
             // 腕の筋弛緩法の動きの時
             case 1:
-                if (checkbone_info.hasHold == false)
+                if (checkbone_info.GethasHold() == false)
                 {
                    
                     pmrInfo_UI.text = "腕に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
-                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                else if (checkbone_info.GethasHold() == true && checkbone_info.GethasRelax() == false)
                 {
                     
                     pmrInfo_UI.text = "腕の力を抜き、\n楽な姿勢で体をリラックスさせる\n" + checkbone_info.Get_timeRelax().ToString("f1") + "秒";
@@ -59,12 +59,12 @@ public class UI_Controller : MonoBehaviour
 
             // 肩の筋弛緩法の動きの時
             case 2:
-                if (checkbone_info.hasHold == false)
+                if (checkbone_info.GethasHold() == false)
                 {
                    
                     pmrInfo_UI.text = "肩に力を入れつつ、\nお手本の体の動きに合わせる\n" + checkbone_info.Get_timeHold().ToString("f1") + "秒";
                 }
-                else if (checkbone_info.hasHold == true && checkbone_info.hasRelax == false)
+                else if (checkbone_info.GethasHold() == true && checkbone_info.GethasRelax() == false)
                 {
 
                    

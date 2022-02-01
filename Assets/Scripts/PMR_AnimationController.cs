@@ -33,33 +33,33 @@ public class PMR_AnimationController : MonoBehaviour
         }
 
         // デバッグ用（アニメーションの情報を送信）
-        switch (currentStateNum)
-        {
-            case 0:
-                StreamWriter sit_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
-                sit_pose.WriteLine("Sit T-pose");
-                sit_pose.Close();
-                break;
+        //switch (currentStateNum)
+        //{
+        //    case 0:
+        //        StreamWriter sit_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        //        sit_pose.WriteLine("Sit T-pose");
+        //        sit_pose.Close();
+        //        break;
 
-            case 1:
-                StreamWriter arm_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
-                arm_pose.WriteLine("Arm");
-                arm_pose.Close();
-                break;
+        //    case 1:
+        //        StreamWriter arm_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        //        arm_pose.WriteLine("Arm");
+        //        arm_pose.Close();
+        //        break;
             
-            case 2:
-                StreamWriter shoulder_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
-                shoulder_pose.WriteLine("Shoulder");
-                shoulder_pose.Close();
-                break;
+        //    case 2:
+        //        StreamWriter shoulder_pose = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        //        shoulder_pose.WriteLine("Shoulder");
+        //        shoulder_pose.Close();
+        //        break;
 
-            default:
-                StreamWriter error = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
-                error.WriteLine(0);
-                error.Close();
-                break;
+        //    default:
+        //        StreamWriter error = new StreamWriter("../data/Animation_data/AnimationState.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        //        error.WriteLine(0);
+        //        error.Close();
+        //        break;
 
-        }
+        //}
 
 
         //Debug.Log("現在のアニメーションの状態" + currentStateNum);

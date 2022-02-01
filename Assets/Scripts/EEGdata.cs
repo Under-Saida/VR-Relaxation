@@ -48,7 +48,9 @@ public class EEGdata : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+       // Hold状態かRelax状態か
+       // 動きの段階(腕の筋弛緩法、肩の筋弛緩法)
+       //脳波の更新のタイミングで更新も入れる
     }
 
     void OnUpdateMindwaveData(MindwaveDataModel _Data)

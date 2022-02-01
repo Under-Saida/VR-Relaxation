@@ -26,7 +26,8 @@ public class CheckBoneInfo : MonoBehaviour
     int StateNum = 0, currentStateNum;
 
     bool bonePosCheck_ok, boneRotCheck_ok, endPose;
-    public bool hasHold = false, hasRelax = false;
+    bool hasHold = false, hasRelax = false;
+    bool hasStartPMR = false, hasEndPMR = false;
 
 
     public float Get_timeHold()
@@ -38,6 +39,22 @@ public class CheckBoneInfo : MonoBehaviour
     {
         return time_relax;
     }
+
+    public bool GethasHold()
+    {
+        return hasHold;
+    }
+
+    public bool GethasRelax()
+    {
+        return hasRelax;
+    }
+
+    public bool GethasStartPMR() 
+    {
+        return hasStartPMR;
+    }
+
 
     // 筋弛緩法の動きのフェーズが一周したか確認し、bool値で返す
     public bool CheckBoolState()
@@ -200,6 +217,8 @@ public class CheckBoneInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("始めて位置合わせを行ったか：" + hasStartPMR);
+
         // アニメーションの変更が終了した場合、関連する変数の値をリセットする
         if(pmr_animation_controller.GethasEndAnimaton() == true)
         {
@@ -277,7 +296,7 @@ public class CheckBoneInfo : MonoBehaviour
         RightHandPos_diff = cloneRightHand.position - myRightHand.position;
 
         // Bone情報の取得に使用（普段はコメントアウトしておく）
-        ExportCloneBone_PosInfo();
+        //ExportCloneBone_PosInfo();
         //ExportBonePosition_diff();
 
         //GetCurrentAnimationStateNum();
@@ -287,6 +306,8 @@ public class CheckBoneInfo : MonoBehaviour
         
         if (hasHold == false && CheckBonePostionDifference() == true)
         {
+            hasStartPMR = true;
+
             time_hold -= Time.deltaTime;
 
             if (time_hold <= 0)
