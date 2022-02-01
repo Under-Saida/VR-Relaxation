@@ -6,7 +6,8 @@ using System.IO;
 
 public class CheckBoneInfo : MonoBehaviour
 {
-    private GameObject myVRM, cloneVRM;
+    private GameObject myVRM;
+    private GameObject cloneVRM;
     public AudioClip ok;
     
     AudioSource audio;
