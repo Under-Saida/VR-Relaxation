@@ -217,7 +217,7 @@ public class CheckBoneInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("始めて位置合わせを行ったか：" + hasStartPMR);
+        Debug.Log("初めて位置合わせを行ったか：" + hasStartPMR);
 
         // アニメーションの変更が終了した場合、関連する変数の値をリセットする
         if(pmr_animation_controller.GethasEndAnimaton() == true)

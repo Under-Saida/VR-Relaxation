@@ -26,6 +26,7 @@ public class PMRdata : MonoBehaviour
     PMR_AnimationController pmr_animation_controller;
 
     int update_num = 0;
+    float muscle_time;
 
     string move_state, muscle_state;
 
@@ -79,21 +80,22 @@ public class PMRdata : MonoBehaviour
             }
 
             // Hold、Relax状態の開始と終わりをstring型のデータに格納
-            if (!checkbone_info.GethasHold() && !checkbone_info.GethasRelax())
+            if (!checkbone_info.GethasHold())
             {
-                muscle_state = "Hold(開始)";
+                muscle_state = "Hold";
+                muscle_time = checkbone_info.Get_timeHold();
             }
             else if(checkbone_info.GethasHold() && !checkbone_info.GethasRelax())
             {
-                muscle_state = "Hold(終了)とRelax(開始)";
+                muscle_state = "Relax";
             }
             else if (checkbone_info.GethasRelax() && checkbone_info.GethasRelax())
             {
-                muscle_state = "Relax(終了)";
+                muscle_state = "終了";
             }
 
             StreamWriter pmrInfo = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
-            pmrInfo.WriteLine("{0}：{1}", move_state, muscle_state);
+            pmrInfo.WriteLine("{0}：{1}：{2}", move_state, muscle_state, muscle_time);
             pmrInfo.Close();
         }
 
