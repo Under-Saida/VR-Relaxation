@@ -57,60 +57,53 @@ public class EEGdata : MonoBehaviour
     {
         m_MindwaveData = _Data;
         attention1 = m_MindwaveData.eSense.attention;
-        StreamWriter attention = new StreamWriter("../data/EEGdata/attentionData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter attention = new StreamWriter("../data/EEGdata/VR/attentionData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         attention.WriteLine(attention1);
         attention.Close();
 
-        // 該当する条件でない時は、WriteLineで書き込む内容を0にする
-        //m_MindwaveData = _Data;
-        //attention1 = m_MindwaveData.eSense.attention;
-        //StreamWriter attention = new StreamWriter("../data/EEGdata/attentionData.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        //attention.WriteLine(0);
-        //attention.Close();
-
         meditation1 = m_MindwaveData.eSense.meditation;
-        StreamWriter meditation = new StreamWriter("../data/EEGdata/meditationData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter meditation = new StreamWriter("../data/EEGdata/VR/meditationData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         meditation.WriteLine(meditation1);
         meditation.Close();
 
         Delta = m_MindwaveData.eegPower.delta;
-        StreamWriter delta = new StreamWriter("../data/EEGdata/deltaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter delta = new StreamWriter("../data/EEGdata/VR/deltaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         delta.WriteLine(Delta);
         delta.Close();
 
         Theta = m_MindwaveData.eegPower.theta;
-        StreamWriter theta = new StreamWriter("../data/EEGdata/thetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter theta = new StreamWriter("../data/EEGdata/VR/thetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         theta.WriteLine(Theta);
         theta.Close();
 
         LowAlpha = m_MindwaveData.eegPower.lowAlpha;
-        StreamWriter la = new StreamWriter("../data/EEGdata/lowalphaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter la = new StreamWriter("../data/EEGdata/VR/lowalphaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         la.WriteLine(LowAlpha);
         la.Close();
 
         HighAlpha = m_MindwaveData.eegPower.highAlpha;
-        StreamWriter ha = new StreamWriter("../data/EEGdata/highalphaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter ha = new StreamWriter("../data/EEGdata/VR/highalphaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         ha.WriteLine(HighAlpha);
         ha.Close();
 
 
         LowBeta = m_MindwaveData.eegPower.lowBeta;
-        StreamWriter lb = new StreamWriter("../data/EEGdata/lowbetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter lb = new StreamWriter("../data/EEGdata/VR/lowbetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         lb.WriteLine(LowBeta);
         lb.Close();
 
         HighBeta = m_MindwaveData.eegPower.highBeta;
-        StreamWriter hb = new StreamWriter("../data/EEGdata/highbetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter hb = new StreamWriter("../data/EEGdata/VR/highbetaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         hb.WriteLine(HighBeta);
         hb.Close();
 
         LowGamma = m_MindwaveData.eegPower.lowGamma;
-        StreamWriter lg = new StreamWriter("../data/EEGdata/lowgammaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter lg = new StreamWriter("../data/EEGdata/VR/lowgammaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         lg.WriteLine(LowGamma);
         lg.Close();
 
         HighGamma = m_MindwaveData.eegPower.highGamma;
-        StreamWriter hg = new StreamWriter("../data/EEGdata/highgammaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter hg = new StreamWriter("../data/EEGdata/VR/highgammaData.txt", true, Encoding.GetEncoding("Shift_JIS"));
         hg.WriteLine(HighGamma);
         hg.Close();
     }
