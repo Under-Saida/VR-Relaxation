@@ -88,15 +88,26 @@ public class PMRdata : MonoBehaviour
             else if(checkbone_info.GethasHold() && !checkbone_info.GethasRelax())
             {
                 muscle_state = "Relax";
+                muscle_time = checkbone_info.Get_timeHold();
             }
             else if (checkbone_info.GethasRelax() && checkbone_info.GethasRelax())
             {
                 muscle_state = "終了";
             }
 
-            StreamWriter pmrInfo = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
-            pmrInfo.WriteLine("{0}：{1}：{2}", move_state, muscle_state, muscle_time);
-            pmrInfo.Close();
+            //終了の状態である場合とHold,Relax状態の時で記載内容を変える
+            if (checkbone_info.GethasRelax() && checkbone_info.GethasRelax())
+            {
+                StreamWriter pmrInfo = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
+                pmrInfo.WriteLine("{0}：{1}：{2}", move_state, muscle_state);
+                pmrInfo.Close();
+            }
+            else
+            {
+                StreamWriter pmrInfo = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
+                pmrInfo.WriteLine("{0}：{1}：{2}", move_state, muscle_state, muscle_time);
+                pmrInfo.Close();
+            }
         }
 
     }
