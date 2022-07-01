@@ -104,9 +104,9 @@ public class PMRdata : MonoBehaviour
 
     void OnUpdateMindwaveData(MindwaveDataModel _Data)
     {
-        StreamWriter updateEGG = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
-        updateEGG.WriteLine("更新：{0}", update_num);
-        updateEGG.Close();
+        StreamWriter updateEEG = new StreamWriter("../data/PMRdata/Data.txt", true, Encoding.GetEncoding("Shift_JIS"));
+        updateEEG.WriteLine("更新：{0}", update_num);
+        updateEEG.Close();
 
         //脳波が更新された回数をインクリメント
         update_num += 1;
