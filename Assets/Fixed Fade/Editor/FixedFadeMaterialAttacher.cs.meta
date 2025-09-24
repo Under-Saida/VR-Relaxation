@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6a06fa3b92f516548a898db97fe8dcbc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PersistentViewDataDictionary: {instanceID: 0}
+  - defaultZwriteMaterial: {fileID: 2100000, guid: 3ea7463c86a9eb64ca332c1182baeb39,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
